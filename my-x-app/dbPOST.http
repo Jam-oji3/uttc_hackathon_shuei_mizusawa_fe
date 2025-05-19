@@ -1,0 +1,12 @@
+POST https://uttc-hackathon-shuei-mizusawa-be-420838494863.us-central1.run.app/users
+Content-Type: application/json
+
+{
+  "username": "shuei",
+  "display_name": "しゅうえい",
+  "bio": "水澤秀映ハッカソンBEテスト",
+  "icon_url": null,
+  "email": "shuei3150@gmail.com"
+}
+
+###
