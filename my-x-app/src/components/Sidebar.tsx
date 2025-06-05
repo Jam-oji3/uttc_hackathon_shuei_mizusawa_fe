@@ -11,7 +11,7 @@ const Sidebar = () => {
         <SidebarItem icon={<FaBell />} label="通知" />
         <SidebarItem icon={<FaUser />} label="プロフィール" />
         <button className={styles.tweetButton}>
-          <FaFeather /> 投稿
+          <FaFeather /> ポストする
         </button>
       </div>
     </aside>

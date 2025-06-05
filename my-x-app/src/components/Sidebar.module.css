@@ -45,7 +45,7 @@
   .tweetButton {
     margin-top: 2rem;
     padding: 0.75rem 1rem;
-    background-color: #1d9bf0;
+    background-color: #000000;
     color: white;
     font-weight: bold;
     border: none;
@@ -58,7 +58,7 @@
   }
   
   .tweetButton:hover {
-    background-color: #1a8cd8;
+    background-color: #3e3e3e;
   }
   
   .featherIcon {
