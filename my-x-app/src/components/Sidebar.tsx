@@ -1,6 +1,7 @@
 // src/components/Sidebar.tsx
 import styles from './Sidebar.module.css';
 import { FaHome, FaSearch, FaBell, FaUser, FaFeather } from 'react-icons/fa';
+import React from 'react';
 
 const Sidebar = () => {
   return (
@@ -23,7 +24,7 @@ type SidebarItemProps = {
   label: string;
 };
 
-const SidebarItem = ({ icon, label }: SidebarItemProps) => (
+const SidebarItem = ({ icon, label }: SidebarItemProps): React.JSX.Element => (
   <div className={styles.item}>
     <span className={styles.icon}>{icon}</span>
     <span className={styles.label}>{label}</span>
