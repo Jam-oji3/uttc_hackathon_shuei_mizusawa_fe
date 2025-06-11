@@ -1,16 +1,12 @@
-// src/App.tsx
+// App.tsx
 import React from 'react';
-import Sidebar from './components/Sidebar';
+import './App.css'; // 必要に応じてスタイルをインポート
+import Home from './pages/Home'; // または '@/pages/home' に合わせて
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <Sidebar />
-      <main style={{ marginLeft: '240px', padding: '2rem' }}>
-        <h1>コンテンツエリア</h1>
-      </main>
-    </div>
+    <Home />
   );
-}
+};
 
 export default App;
