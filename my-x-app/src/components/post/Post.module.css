@@ -1,0 +1,70 @@
+.post {
+    display: flex;
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+  }
+  
+  .post:hover {
+    background-color: #ededed;
+  }
+  
+  .avatarContainer {
+    margin-right: 12px;
+  }
+  
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+  
+  .mainContent {
+    flex: 1;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .authorName {
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  .username, .createdAt, .separator {
+    color: #71767b;
+  }
+  
+  .content {
+    margin: 4px 0 12px;
+    color: #000000;
+    white-space: pre-wrap; /* 改行を反映させる */
+  }
+  
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    max-width: 425px;
+    color: #71767b;
+  }
+  
+  .statItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  
+  .statItem:hover {
+    color: #1d9bf0; /* ホバー時の色 */
+  }
+  
+  .statItem:nth-child(2):hover {
+    color: #00ba7c; /* リポストのホバー色 */
+  }
+  .statItem:nth-child(3):hover {
+    color: #f91880; /* いいねのホバー色 */
+  }

@@ -1,0 +1,65 @@
+.createPostContainer {
+    display: flex;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .avatarContainer {
+     margin-right: 12px;
+  }
+  
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+  
+  .formContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .textarea {
+    background-color: transparent;
+    border: none;
+    color: #000000;
+    font-size: 20px;
+    padding: 12px 0;
+    resize: none;
+    outline: none;
+    min-height: 50px;
+  }
+  
+  .textarea::placeholder {
+    color: #71767b;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .postButton {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 9999px;
+    padding: 8px 16px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .postButton:hover {
+    background-color: #4b4b4b;
+  }
+  
+  .postButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
