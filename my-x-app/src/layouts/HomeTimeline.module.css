@@ -1,0 +1,16 @@
+.timeline {
+    /* Xでは中央カラムの幅が固定されています */
+    max-width: 600px;
+    margin-top: 0;
+    width: 100%;
+    height: 100vh;
+    border-left: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+  }
+
+  
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e7e9ea;
+  }
