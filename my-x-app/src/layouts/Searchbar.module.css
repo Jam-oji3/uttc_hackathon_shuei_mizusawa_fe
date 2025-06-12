@@ -1,15 +1,12 @@
 .searchbar {
-    width: px;
-    height: 100vh;
-    padding: 20px;
-    border-left: 1px solid #ddd;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    position: fixed;
-    right: 0;
-    top: 0;
+  width: 350px;
+  height: 100vh;
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky; /* スクロールに追従 */
+  top: 0;
   }
   
   /* 検索バー */

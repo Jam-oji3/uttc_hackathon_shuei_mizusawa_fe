@@ -1,16 +1,13 @@
 /* src/components/Sidebar.module.css */
 .sidebar {
-    width: 240px;
-    height: 100vh;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background-color: #ffffff;
-    top: 0;
-    left: 0;
-    position: fixed;
+  width: 275px; /* Xの標準的な幅に調整 */
+  height: 100vh;
+  padding: 0 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: sticky; /* スクロールに追従 */
+  top: 0;
   }
   
   .menu {
