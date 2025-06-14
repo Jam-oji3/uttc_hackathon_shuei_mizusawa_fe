@@ -1,0 +1,15 @@
+/* pages/SignUp.module.css */
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f8fa;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+  }
+  
