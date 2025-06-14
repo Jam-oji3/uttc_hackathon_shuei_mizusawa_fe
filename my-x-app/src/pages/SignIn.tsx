@@ -1,5 +1,5 @@
 import React from 'react';
-import SignInForm from '../features/auth/SignInForm';
+import SignInForm from '../features/auth/components/SignInForm';
 import styles from './SignIn.module.css';
 
 const SignIn: React.FC = () => {
