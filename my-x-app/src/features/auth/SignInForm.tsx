@@ -19,12 +19,10 @@ const SignInForm: React.FC = () => {
 
         // IDトークンをバックエンドに送信
       const response = await fetch(`${API_BASE_URL}/auth`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${idToken}`, // 推奨される方法
         },
-        body: JSON.stringify({}) // 必要なら他の情報も送れる（例：userAgentなど）
       });
       if (response.status === 404) {
         // ユーザーが存在しない場合はサインアップ画面にリダイレクト
