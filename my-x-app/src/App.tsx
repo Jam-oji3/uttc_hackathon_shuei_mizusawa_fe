@@ -1,12 +1,16 @@
 // App.tsx
 import React from 'react';
-import './App.css'; // 必要に応じてスタイルをインポート
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
+import './App.css';
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <SignIn />
+    <Routes>
+      <Route path="/" element={<SignIn />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
   );
 };
 

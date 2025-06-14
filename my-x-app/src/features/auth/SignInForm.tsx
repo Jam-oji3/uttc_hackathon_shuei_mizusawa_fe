@@ -1,15 +1,42 @@
 import React from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase'; // Firebaseの設定をインポート
 import AuthButton from './AuthButton';
 import styles from './SignInForm.module.css';
 
 const SignInForm: React.FC = () => {
+  const navigate = useNavigate();
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const user =result.user;
+      const idToken = await user.getIdToken();
+
+        // IDトークンをバックエンドに送信
+      const response = await fetch(`${API_BASE_URL}/auth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`, // 推奨される方法
+        },
+        body: JSON.stringify({}) // 必要なら他の情報も送れる（例：userAgentなど）
+      });
+      if (response.status === 404) {
+        // ユーザーが存在しない場合はサインアップ画面にリダイレクト
+        console.error("ユーザーが存在しません。サインアップ画面にリダイレクトします。");
+        navigate('/signup');
+        return;
+      }
+      if (!response.ok) {
+        throw new Error(`サーバーエラー: ${response.status}`);
+      }
+      const data = await response.json();
+      navigate('/home')
     } catch (error) {
       console.error("Google Sign-In Error:", error);
     }
