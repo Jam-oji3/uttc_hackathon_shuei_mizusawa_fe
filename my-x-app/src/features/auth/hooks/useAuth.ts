@@ -13,28 +13,31 @@ export const useAuth = () => {
     setIsLoading(true);
     setError(null);
     const provider = new GoogleAuthProvider();
-
+  
     try {
       const result = await signInWithPopup(auth, provider);
       const idToken = await result.user.getIdToken();
-
-      await verifyUserWithBackend(idToken);
-
-      // 成功したらホームへ
-      navigate('/home');
-
-    } catch (err) {
-      if (err instanceof Error && err.message === 'UserNotFound') {
-        console.error("User not found, redirecting to signup.");
-        navigate('/signup');
-      } else {
-        console.error("Google Sign-In Error:", err);
-        setError(err instanceof Error ? err : new Error('An unknown error occurred'));
+  
+      const res = await verifyUserWithBackend(idToken);
+  
+      if (!res.success){
+        throw new Error(res.message || 'Unknown error occurred');
       }
+      if (res.message === 'UserNotFound') {
+        // UserNotFoundのときはサインアップ画面へuidとemailを渡して遷移
+        navigate('/sign-up', { state: { id: res.uid, email: res.email } });
+        return;
+      }
+      navigate('/home', { state: { user: res.user } });
+  
+    } catch (err) {
+      console.error("Google Sign-In Error:", err);
+      setError(err instanceof Error ? err : new Error('An unknown error occurred'));
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   return { signInWithGoogle, isLoading, error };
 };

@@ -14,11 +14,6 @@ export const verifyUserWithBackend = async (idToken: string) => {
     },
   });
 
-  // 404の場合は例外を投げて、呼び出し元でハンドリングできるようにする
-  if (response.status === 404) {
-    throw new Error('UserNotFound'); // エラーの種類を識別できる文字列やカスタムエラーを投げる
-  }
-
   if (!response.ok) {
     throw new Error(`Server error: ${response.status}`);
   }
