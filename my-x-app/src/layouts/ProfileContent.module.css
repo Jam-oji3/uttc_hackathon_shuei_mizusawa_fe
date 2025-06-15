@@ -1,0 +1,19 @@
+.profileContent {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    gap: 24px;
+    border-left: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+  }
+  
+  .loading,
+  .error {
+    padding: 24px;
+    text-align: center;
+    color: #666;
+  }
+  
