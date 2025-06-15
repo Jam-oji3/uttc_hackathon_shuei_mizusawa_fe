@@ -1,12 +1,15 @@
 // src/components/Sidebar.tsx
 import styles from './Sidebar.module.css';
 import { FaHome, FaSearch, FaBell, FaUser, FaFeather } from 'react-icons/fa';
+import AppIcon from '../components/icons/AppIcon';
 import React from 'react';
+
 
 const Sidebar = () => {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.menu}>
+        <AppIcon size={40} className={styles.iconLogo}/>
         <SidebarItem icon={<FaHome />} label="ホーム" />
         <SidebarItem icon={<FaSearch />} label="検索" />
         <SidebarItem icon={<FaBell />} label="通知" />
