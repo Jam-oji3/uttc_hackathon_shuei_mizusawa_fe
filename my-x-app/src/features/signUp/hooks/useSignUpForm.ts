@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useStorageUpload } from '../../../hooks/useStorageUpload';
 import { validateSignUpForm, SignUpFormData, SignUpFormErrors } from '../validators/signUpValidator';
-import { registerUser } from '../api/register'; // 👈 作成したAPI関数をインポート
+import { registerUser } from '../api/registerApi'; // 👈 作成したAPI関数をインポート
 
 export const useSignUpForm = () => {
   const navigate = useNavigate();

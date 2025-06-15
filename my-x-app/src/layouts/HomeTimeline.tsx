@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { PostData } from '@/types/PostData';
-import { CreatePost } from '../features/homeTimeline/CreatePost';
+import { CreatePostForm } from '../features/home/components/CreatePost';
 import { PostList } from '../components/post/PostList';
-import { Tabs } from '../features/homeTimeline/Tabs';
+import { Tabs } from '../features/home/components/Tabs';
 import styles from './HomeTimeline.module.css';
 
 // ダミーデータ
@@ -59,13 +59,70 @@ const dummyPosts: PostData[] = [
 
 export const HomeTimeline = () => {
   const [activeTab, setActiveTab] = useState<'recommend' | 'following'>('recommend');
-  // TODO: activeTabに応じてAPIから取得するデータを切り替える
   const [posts, setPosts] = useState<PostData[]>(dummyPosts);
+
+  // CreatePostForm 用の state
+  const [text, setText] = useState('');
+  const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
+  const [uploadedType, setUploadedType] = useState<'photo' | 'model' | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleUpload = async (file: File | null, type: 'photo' | 'model' | null) => {
+    if (!file || !type) {
+      // ファイルがnullまたはtypeがnullならアップロード解除（メディア削除）
+      setUploadedUrl(null);
+      setUploadedType(null);
+      return;
+    }
+  
+    setIsUploading(true);
+    try {
+      // 仮のアップロード処理（実際はAPI経由）
+      const fakeUrl = URL.createObjectURL(file);
+      setUploadedUrl(fakeUrl);
+      setUploadedType(type);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+  
+  const handlePost = () => {
+    if (!text && !uploadedUrl) return;
+
+    const newPost: PostData = {
+      id: Date.now().toString(),
+      author: {
+        name: 'あなた',
+        username: '@your_name',
+        avatarUrl: 'https://i.pravatar.cc/150?u=your_avatar',
+      },
+      content: text,
+      createdAt: new Date().toISOString(),
+      stats: {
+        likes: 0,
+        reposts: 0,
+        comments: 0,
+      },
+    };
+
+    setPosts([newPost, ...posts]);
+    setText('');
+    setUploadedUrl(null);
+    setUploadedType(null);
+  };
 
   return (
     <div className={styles.timeline}>
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-      <CreatePost />
+      <CreatePostForm
+        text={text}
+        setText={setText}
+        handleUpload={handleUpload}
+        uploadedUrl={uploadedUrl}
+        uploadedType={uploadedType}
+        isUploading={isUploading}
+        handlePost={handlePost}
+      />
       <PostList posts={posts} />
     </div>
   );
