@@ -1,4 +1,3 @@
-// src/App.tsx
 import Sidebar from '../layouts/Sidebar';
 import Searchbar from '../layouts/Searchbar';
 import { HomeTimeline } from '../layouts/HomeTimeline';
