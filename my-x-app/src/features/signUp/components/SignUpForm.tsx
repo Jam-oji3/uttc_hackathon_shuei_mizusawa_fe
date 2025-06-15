@@ -1,5 +1,3 @@
-// src/components/SignUpForm.tsx
-
 import React from 'react';
 import { useSignUpForm } from '../hooks/useSignUpForm';
 import UserInputField from './UserInputField';
@@ -8,7 +6,7 @@ import IconUploader from './IconUploader';
 import styles from './SignUpForm.module.css';
 
 const SignUpForm: React.FC = () => {
-  // カスタムフックから状態とロジックを受け取る
+  // カスタムフックから状態とロジックをシンプルに受け取る
   const {
     formData,
     iconPreview,
@@ -22,13 +20,15 @@ const SignUpForm: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>アカウント作成</h2>
+      {/* noValidateでブラウザのデフォルトバリデーションを無効化 */}
       <form onSubmit={handleSubmit} noValidate>
         <UserInputField
-          label="ユーザー名（@user）"
+          label="ユーザー名"
           name="userName"
           value={formData.userName}
           onChange={handleInputChange}
-          required={true}
+          placeholder="@を含む半角英数字"
+          required
         />
         {errors.userName && <p className={styles.error}>{errors.userName}</p>}
 
@@ -37,7 +37,7 @@ const SignUpForm: React.FC = () => {
           name="displayName"
           value={formData.displayName}
           onChange={handleInputChange}
-          required={true}
+          required
         />
         {errors.displayName && <p className={styles.error}>{errors.displayName}</p>}
 
@@ -54,6 +54,7 @@ const SignUpForm: React.FC = () => {
           preview={iconPreview}
           onChange={handleIconChange}
         />
+
         <button type="submit" className={styles.button} disabled={isLoading}>
           {isLoading ? '登録中...' : '登録する'}
         </button>
