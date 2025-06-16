@@ -5,10 +5,11 @@
   }
   
   /* ロゴとテキスト */
-  .logo {
+  .iconLogo {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 2rem;
+    border-radius: 10%;
   }
   .headerText {
     font-size: 3.5rem;

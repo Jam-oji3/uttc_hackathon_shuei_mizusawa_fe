@@ -1,15 +1,15 @@
 import Sidebar from '../layouts/Sidebar';
 import Searchbar from '../layouts/Searchbar';
-import { HomeTimeline } from '../layouts/HomeTimeline';
+import {ProfileContent } from '../layouts/ProfileContent';
 
-function Home() {
+function UserProfile() {
   return (
     <div className="mainLayout">
       <Sidebar />
-      <HomeTimeline />
+      <ProfileContent />
       <Searchbar />
     </div>
   );
 }
 
-export default Home;
+export default UserProfile;

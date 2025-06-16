@@ -63,3 +63,29 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+  .actions {
+    display: flex;
+    justify-content: space-between; /* ← 左右に分ける */
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .leftActions {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .iconButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1d9bf0;
+    font-size: 18px;
+    padding: 6px;
+    transition: color 0.2s;
+  }
+  
+  .iconButton:hover {
+    color: #1274b0;
+  }

@@ -2,8 +2,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useStorageUpload } from '../../../hooks/useStorageUpload';
 import { validateSignUpForm, SignUpFormData, SignUpFormErrors } from '../validators/signUpValidator';
-import { registerUser } from '../api/register'; // 👈 作成したAPI関数をインポート
+import { registerUser } from '../api/registerApi'; // 👈 作成したAPI関数をインポート
 
 export const useSignUpForm = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ export const useSignUpForm = () => {
   const [errors, setErrors] = useState<SignUpFormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
 
+  const { uploadFile, isLoading: isUploading, error: uploadError } = useStorageUpload();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -34,42 +37,44 @@ export const useSignUpForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
-
+  
     if (!id || !email) {
       setErrors({ userName: 'ユーザーIDまたはメールアドレスが見つかりませんでした。' });
       return;
     }
-
+  
     const validationErrors = validateSignUpForm(formData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-
+  
     setIsLoading(true);
-    
+  
     try {
-      const submissionData = new FormData();
-      submissionData.append('id', id);
-      submissionData.append('email', email);
-      submissionData.append('userName', formData.userName);
-      submissionData.append('displayName', formData.displayName);
-      submissionData.append('bio', formData.bio);
+      let iconUrl = "";
       if (iconFile) {
-        submissionData.append('iconFile', iconFile);
+        iconUrl = await uploadFile(iconFile);
       }
-        
-      // ▼▼▼ APIロジックを専用関数に置き換え ▼▼▼
-      const result = await registerUser(submissionData);
-
+  
+      // FormData の代わりに JSON オブジェクトとして送信
+      const submissionData = {
+        id,
+        email,
+        userName: formData.userName,
+        displayName: formData.displayName,
+        bio: formData.bio,
+        iconUrl,
+      };
+  
+      const result = await registerUser(submissionData); // 👈 JSONで送信
+  
       console.log('Registration successful:', result.message);
       alert('アカウント作成成功！');
-      // 成功したらページ遷移などの処理
       navigate('/home', { state: { user: result.user } });
-
+  
     } catch (error: any) {
       console.error('Registration failed:', error);
-      // registerUserからスローされたエラーをキャッチしてUIに表示
       setErrors({ userName: error.message || '不明なエラーが発生しました。' });
     } finally {
       setIsLoading(false);

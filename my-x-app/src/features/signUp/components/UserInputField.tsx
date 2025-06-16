@@ -7,9 +7,17 @@ type Props = {
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
+  placeholder?: string; 
 };
 
-const UserInputField: React.FC<Props> = ({ label, name, value, onChange, required }) => (
+const UserInputField: React.FC<Props> = ({
+  label,
+  name,
+  value,
+  onChange,
+  required,
+  placeholder, 
+}) => (
   <div className={styles.formGroup}>
     <label className={styles.label}>
       {label}
@@ -21,7 +29,8 @@ const UserInputField: React.FC<Props> = ({ label, name, value, onChange, require
       name={name}
       value={value}
       onChange={onChange}
-      required
+      required={required} 
+      placeholder={placeholder}
     />
   </div>
 );
