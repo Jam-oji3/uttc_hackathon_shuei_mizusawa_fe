@@ -2,7 +2,7 @@ export type PostData = {
     id: string;
     author: {
       displayName: string;
-      userName: string; // @handle のようなユーザー名
+      username: string; // @handle のようなユーザー名
       iconUrl: string; // アイコン画像のURL
     };
     text: string;
@@ -17,3 +17,14 @@ export type PostData = {
       comments: number;
     };
   };
+
+  type RawPostResponse = {
+    id: string;
+    userId: string;
+    tetx: string;
+    replyTo?: string;
+    repostRef?: string;
+    mediaType?: 'photo' | 'model' | null;
+    mediaUrl?: string | null;
+    createdAt: string; // ISO 8601 形式のタイムスタンプ (例: "2025-06-11T19:30:00Z")
+  }

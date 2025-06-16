@@ -31,7 +31,7 @@ export const Post = ({ post }: { post: PostData }) => {
       <div className={styles.mainContent}>
         <div className={styles.header}>
           <span className={styles.authorName}>{post.author.displayName}</span>
-          <span className={styles.username}>{post.author.userName}</span>
+          <span className={styles.username}>@{post.author.username}</span>
           <span className={styles.separator}>·</span>
           <span className={styles.createdAt}>{formatTimeAgo(post.createdAt)}</span>
         </div>

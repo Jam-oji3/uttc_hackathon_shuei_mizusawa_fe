@@ -2,14 +2,14 @@
 
 // フォームの入力値の型
 export interface SignUpFormData {
-    userName: string;
+    username: string;
     displayName: string;
     bio: string;
   }
   
   // エラーメッセージの型
   export interface SignUpFormErrors {
-    userName?: string;
+    username?: string;
     displayName?: string;
     bio?: string;
   }
@@ -17,10 +17,10 @@ export interface SignUpFormData {
   export const validateSignUpForm = (data: SignUpFormData): SignUpFormErrors => {
     const errors: SignUpFormErrors = {};
   
-    if (!data.userName) {
-      errors.userName = 'ユーザー名は必須です。';
-    } else if (!/^[a-zA-Z0-9_]{5,15}$/.test(data.userName)) {
-      errors.userName = 'ユーザー名は5〜15文字の半角英数字とアンダースコア(_)のみ使用できます。';
+    if (!data.username) {
+      errors.username = 'ユーザー名は必須です。';
+    } else if (!/^[a-zA-Z0-9_]{5,15}$/.test(data.username)) {
+      errors.username = 'ユーザー名は5〜15文字の半角英数字とアンダースコア(_)のみ使用できます。';
     }
   
     if (!data.displayName) {

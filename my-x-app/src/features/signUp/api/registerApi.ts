@@ -11,7 +11,7 @@ interface RegisterSuccessResponse {
 interface SubmissionData {
   id: string;
   email: string;
-  userName: string;
+  username: string;
   displayName: string;
   bio: string;
   iconUrl: string;

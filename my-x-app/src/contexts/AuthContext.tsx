@@ -40,7 +40,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(null); // ユーザー情報はまだなし
         return;
       }
-
+      if (!res.user){
+        throw new Error('User data not found in response');
+      }
+      console.log('User data from backend:', res.user);
       // ユーザーデータをセット
       setUser(res.user);
       navigate('/home');

@@ -12,7 +12,7 @@ export const useSignUpForm = () => {
   const { id, email} = location.state || {};
 
   const [formData, setFormData] = useState<SignUpFormData>({
-    userName: '',
+    username: '',
     displayName:'',
     bio: '',
   });
@@ -39,7 +39,7 @@ export const useSignUpForm = () => {
     setErrors({});
   
     if (!id || !email) {
-      setErrors({ userName: 'ユーザーIDまたはメールアドレスが見つかりませんでした。' });
+      setErrors({ username: 'ユーザーIDまたはメールアドレスが見つかりませんでした。' });
       return;
     }
   
@@ -61,7 +61,7 @@ export const useSignUpForm = () => {
       const submissionData = {
         id,
         email,
-        userName: formData.userName,
+        username: formData.username,
         displayName: formData.displayName,
         bio: formData.bio,
         iconUrl,
@@ -75,7 +75,7 @@ export const useSignUpForm = () => {
   
     } catch (error: any) {
       console.error('Registration failed:', error);
-      setErrors({ userName: error.message || '不明なエラーが発生しました。' });
+      setErrors({ username: error.message || '不明なエラーが発生しました。' });
     } finally {
       setIsLoading(false);
     }

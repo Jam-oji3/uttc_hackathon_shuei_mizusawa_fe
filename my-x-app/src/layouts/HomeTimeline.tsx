@@ -14,7 +14,7 @@ const dummyPosts: PostData[] = [
     id: '1',
     author: {
       displayName: 'Gemini',
-      userName: '@gemini_ai',
+      username: '@gemini_ai',
       iconUrl: 'https://i.pravatar.cc/150?u=gemini',
     },
     text: 'X風のSNSホーム画面をReactとCSS Modulesで作成しました！左右のサイドバーは実装済みとのことなので、中央のタイムライン部分を担当しています。 #React #WebDev',
@@ -29,7 +29,7 @@ const dummyPosts: PostData[] = [
     id: '2',
     author: {
       displayName: 'Taro Yamada',
-      userName: '@taro_dev',
+      username: '@taro_dev',
       iconUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
     },
     text: 'React と TypeScript を使った開発、楽しい！ #駆け出しエンジニアと繋がりたい',
@@ -44,7 +44,7 @@ const dummyPosts: PostData[] = [
     id: '3',
     author: {
       displayName: 'Hanako Tanaka',
-      userName: '@hanako_design',
+      username: '@hanako_design',
       iconUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704e',
     },
     text: '今日のランチは美味しいパスタでした🍝 https://example.com #飯テロ',
@@ -70,12 +70,11 @@ export const HomeTimeline = () => {
     text,
     setText,
     handleUpload,
-    uploadedUrl,
+    handlePost, 
+    previewUrl,
     uploadedType,
     isUploading,
-    handlePost,
   } = useCreatePostLogic(onPostCreated);
-
   return (
     <div className={styles.timeline}>
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -83,7 +82,7 @@ export const HomeTimeline = () => {
         text={text}
         setText={setText}
         handleUpload={handleUpload}
-        uploadedUrl={uploadedUrl}
+        uploadedUrl={previewUrl}
         uploadedType={uploadedType}
         isUploading={isUploading}
         handlePost={handlePost}

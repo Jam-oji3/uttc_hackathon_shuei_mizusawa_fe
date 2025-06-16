@@ -2,71 +2,88 @@ import { useState } from 'react';
 import { useStorageUpload } from '../../../hooks/useStorageUpload';
 import { createPost } from '../api/createPostApi';
 import { PostData } from '@/types/PostData';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) => {
   const [text, setText] = useState('');
   const [uploadedType, setUploadedType] = useState<'photo' | 'model' | null>(null);
+  const [fileToUpload, setFileToUpload] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const {
-    uploadFile,
-    downloadURL,
-    isLoading,
-  } = useStorageUpload();
+  const { user } = useAuthContext();
+  const { uploadFile, downloadURL, isLoading } = useStorageUpload();
 
-  const handleUpload = async (file: File | null, type: 'photo' | 'model' | null) => {
+  const handleUpload = (file: File | null, type: 'photo' | 'model' | null) => {
     if (!file || !type) {
+      // リセット
+      setFileToUpload(null);
+      setPreviewUrl(null);
       setUploadedType(null);
       return;
     }
 
-    if (downloadURL) {
-      alert('You can only upload one piece of media at a time.');
-      return;
-    }
-
-    await uploadFile(file); 
+    setFileToUpload(file);
     setUploadedType(type);
+
+    // プレビュー用URLを作成（アップロードはしない）
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
   };
 
   const handlePost = async () => {
-    // ❗ This is a placeholder. In a real app, you would get
-    // the user ID from your authentication context or state management.
-    const userId = 'rtXMVdtcnBRvhvCNzpLQI1tBdfb2';
+    if (!user) {
+      alert('You must be logged in to create a post.');
+      return;
+    }
 
     try {
-      
+      let mediaUrl: string | null = null;
+
+      if (fileToUpload) {
+        // 投稿時に初めてアップロードする
+        await uploadFile(fileToUpload);
+        mediaUrl = downloadURL || null;
+      }
+
       await createPost({
-        userId,
+        userId: user.id,
         text,
-        mediaUrl: downloadURL,
+        mediaUrl,
         mediaType: uploadedType,
-        replyTo: null, // 返信機能が必要な場合は適宜設定
-        repostRef: null, // リポスト機能が必要な場合は適宜設定
+        replyTo: null,
+        repostRef: null,
       });
 
       alert('Post created successfully!');
 
       const now = new Date();
+
       onPostCreated?.({
-        id: userId,
+        id: user.id,
         author: {
-          displayName: 'あなた',
-          userName: 'your_username',
-          iconUrl: 'https://i.pravatar.cc/150?u=your_avatar'
+          displayName: user.displayName,
+          username: user.username,
+          iconUrl: user.iconUrl || 'https://i.pravatar.cc/150?u=a042581f4e29026704e',
         },
-        text: 'これは本文',
+        text,
         createdAt: now.toISOString(),
         mediaType: uploadedType,
-        mediaUrl: downloadURL,
+        mediaUrl,
         stats: {
           likes: 0,
           reposts: 0,
           comments: 0,
-        }
-      })
+        },
+      });
+
+      // 後片付け
       setText('');
       setUploadedType(null);
-
+      setFileToUpload(null);
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl); // メモリ解放
+        setPreviewUrl(null);
+      }
     } catch (error) {
       alert(`Error: ${error instanceof Error ? error.message : 'Could not create post.'}`);
     }
@@ -76,7 +93,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
     text,
     setText,
     handleUpload,
-    uploadedUrl: downloadURL,
+    previewUrl,      // ここでプレビューURLを返すので、表示に使える
     uploadedType,
     isUploading: isLoading,
     handlePost,
