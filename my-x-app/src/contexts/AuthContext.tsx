@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { GoogleAuthProvider, signInWithPopup, User } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-import { verifyUserWithBackend } from '../features/auth/api/authApi';
+import { verifyUserWithBackend } from '../features/auth/api/authAPI';
 import { UserData } from '@/types/UserData';
 
 type AuthContextType = {

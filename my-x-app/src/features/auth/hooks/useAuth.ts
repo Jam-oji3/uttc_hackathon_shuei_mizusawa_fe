@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../firebase'; // パスは適宜調整
-import { verifyUserWithBackend } from '../api/authApi';
+import { verifyUserWithBackend } from '../api/authAPI';
 
 export const useAuth = () => {
   const navigate = useNavigate();
