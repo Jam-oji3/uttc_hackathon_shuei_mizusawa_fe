@@ -1,5 +1,6 @@
 // import Image from 'next/image'; // この行を削除
 import { PostData } from '@/types/PostData';
+import { MediaPreview } from '../../features/media/components/MediaPreview';
 import styles from './Post.module.css';
 
 // 簡易的な時間表示フォーマット関数 (変更なし)
@@ -21,24 +22,26 @@ export const Post = ({ post }: { post: PostData }) => {
   return (
     <div className={styles.post}>
       <div className={styles.avatarContainer}>
-        {/* ▼▼▼ ここを <Image> から <img> に変更 ▼▼▼ */}
         <img 
-          src={post.author.avatarUrl} 
-          alt={`${post.author.name}のアバター`} 
+          src={post.author.iconUrl} 
+          alt={`${post.author.displayName}のアイコン`} 
           className={styles.avatar} 
         />
-        {/* ▲▲▲ ここまで変更 ▲▲▲ */}
       </div>
       <div className={styles.mainContent}>
         <div className={styles.header}>
-          <span className={styles.authorName}>{post.author.name}</span>
-          <span className={styles.username}>{post.author.username}</span>
+          <span className={styles.authorName}>{post.author.displayName}</span>
+          <span className={styles.username}>{post.author.userName}</span>
           <span className={styles.separator}>·</span>
           <span className={styles.createdAt}>{formatTimeAgo(post.createdAt)}</span>
         </div>
-        <p className={styles.content}>{post.content}</p>
+        <p className={styles.content}>{post.text}</p>
+        <div>
+          {post.mediaUrl && post.mediaType && (
+            <MediaPreview url={post.mediaUrl} type={post.mediaType} />
+          )}
+        </div>
         <div className={styles.stats}>
-          {/* ... (変更なし) */}
           <div className={styles.statItem}>
             <span>💬</span>
             <span>{post.stats.comments}</span>
