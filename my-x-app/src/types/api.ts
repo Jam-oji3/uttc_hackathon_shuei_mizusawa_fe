@@ -1,4 +1,6 @@
 import { UserData } from './UserData';
+import { PostData } from './PostData';
+import { LikeData } from './LikeData';
 
 export type VerifyUserResponse = {
     success: boolean;
@@ -33,3 +35,15 @@ export type CreatePostResponse = {
     message: string;
     post: string;
 };
+
+export type FetchRecentPostsResponse = {
+    success: boolean;
+    message: string;
+    posts: PostData[];
+}
+
+export type CreateLikeResponse = {
+    success: boolean;
+    like: LikeData;
+    message: string;
+}

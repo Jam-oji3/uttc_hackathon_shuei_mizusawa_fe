@@ -1,6 +1,7 @@
 export type PostData = {
     id: string;
     author: {
+      id: string;
       displayName: string;
       username: string; // @handle のようなユーザー名
       iconUrl: string; // アイコン画像のURL
@@ -16,15 +17,9 @@ export type PostData = {
       reposts: number;
       comments: number;
     };
+    userActions: {
+      liked: boolean;
+      reposted: boolean;
+    }
   };
 
-  type RawPostResponse = {
-    id: string;
-    userId: string;
-    tetx: string;
-    replyTo?: string;
-    repostRef?: string;
-    mediaType?: 'photo' | 'model' | null;
-    mediaUrl?: string | null;
-    createdAt: string; // ISO 8601 形式のタイムスタンプ (例: "2025-06-11T19:30:00Z")
-  }
