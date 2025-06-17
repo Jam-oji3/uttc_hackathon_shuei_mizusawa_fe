@@ -10,6 +10,7 @@ interface Props {
   uploadedType: 'photo' | 'model' | null;
   isUploading: boolean;
   handlePost: () => void;
+  userIconUrl?: string; // ユーザーのアイコンURL（オプション）
 }
 
 export const CreatePostForm = ({
@@ -20,6 +21,7 @@ export const CreatePostForm = ({
   uploadedType,
   isUploading,
   handlePost,
+  userIconUrl
 }: Props) => {
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'photo' | 'model') => {
     const file = e.target.files?.[0];
@@ -37,7 +39,7 @@ export const CreatePostForm = ({
     <div className={styles.createPostContainer}>
       <div className={styles.avatarContainer}>
         <img
-          src="https://i.pravatar.cc/150?u=my-avatar"
+          src={userIconUrl || 'https://i.pravatar.cc/150?u=default_avatar'} // デフォルトのアバターURL}
           alt="自分のアバター"
           className={styles.avatar}
         />

@@ -1,9 +1,10 @@
-// import Image from 'next/image'; // この行を削除
 import { PostData } from '@/types/PostData';
-import { MediaPreview } from '../../features/media/components/MediaPreview';
+import { MediaPreview } from '../media/components/MediaPreview';
 import styles from './Post.module.css';
+import { FaRegComment, FaRetweet, FaHeart, FaLink } from 'react-icons/fa';
+import { usePostActions } from './hooks/usePostActions';
 
-// 簡易的な時間表示フォーマット関数 (変更なし)
+// 時間表示フォーマット関数
 const formatTimeAgo = (dateString: string) => {
   const date = new Date(dateString);
   const now = new Date();
@@ -19,6 +20,14 @@ const formatTimeAgo = (dateString: string) => {
 };
 
 export const Post = ({ post }: { post: PostData }) => {
+  const {
+    likes,
+    liked,
+    toggleLike,
+    reposts,
+    reposted,
+    toggleRepost,
+  } = usePostActions(post.id, post.stats.likes, false, post.stats.reposts, false);
   return (
     <div className={styles.post}>
       <div className={styles.avatarContainer}>
@@ -43,19 +52,19 @@ export const Post = ({ post }: { post: PostData }) => {
         </div>
         <div className={styles.stats}>
           <div className={styles.statItem}>
-            <span>💬</span>
+            <FaRegComment />
             <span>{post.stats.comments}</span>
           </div>
-          <div className={styles.statItem}>
-            <span>🔁</span>
-            <span>{post.stats.reposts}</span>
+          <div className={styles.statItem} onClick={toggleRepost}>
+            <FaRetweet color={reposted ? '#00ba7c' : undefined}/>
+            <span>{reposts}</span>
+          </div>
+          <div className={styles.statItem} onClick={toggleLike}>
+            <FaHeart color={liked ? '#f91880' : undefined} />
+            <span>{likes}</span>
           </div>
           <div className={styles.statItem}>
-            <span>❤️</span>
-            <span>{post.stats.likes}</span>
-          </div>
-           <div className={styles.statItem}>
-            <span>🔗</span>
+            <FaLink />
           </div>
         </div>
       </div>

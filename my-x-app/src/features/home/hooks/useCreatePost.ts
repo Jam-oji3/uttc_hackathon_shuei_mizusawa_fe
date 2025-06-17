@@ -11,7 +11,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const { user } = useAuthContext();
-  const { uploadFile, downloadURL, isLoading } = useStorageUpload();
+  const { uploadFile, isLoading } = useStorageUpload();
 
   const handleUpload = (file: File | null, type: 'photo' | 'model' | null) => {
     if (!file || !type) {
@@ -41,8 +41,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
 
       if (fileToUpload) {
         // 投稿時に初めてアップロードする
-        await uploadFile(fileToUpload);
-        mediaUrl = downloadURL || null;
+        mediaUrl = await uploadFile(fileToUpload);
       }
 
       await createPost({
@@ -61,6 +60,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
       onPostCreated?.({
         id: user.id,
         author: {
+          id: user.id,
           displayName: user.displayName,
           username: user.username,
           iconUrl: user.iconUrl || 'https://i.pravatar.cc/150?u=a042581f4e29026704e',
@@ -73,6 +73,10 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
           likes: 0,
           reposts: 0,
           comments: 0,
+        },
+        userActions: {
+          liked: false,
+          reposted: false,
         },
       });
 
@@ -97,5 +101,6 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
     uploadedType,
     isUploading: isLoading,
     handlePost,
+    userIconUrl: user?.iconUrl || 'https://i.pravatar.cc/150?u=a042581f4e29026704e',
   };
 };
