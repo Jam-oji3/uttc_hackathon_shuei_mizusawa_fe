@@ -8,5 +8,8 @@ export const verifyUserWithBackend = async (idToken: string): Promise<VerifyUser
     method: 'GET',
     headers: {'Authorization': `Bearer ${idToken}`}
   })
+  if (!json) {
+    throw new Error("Failed to verify user: No response from server");
+  }
   return json;
 };
