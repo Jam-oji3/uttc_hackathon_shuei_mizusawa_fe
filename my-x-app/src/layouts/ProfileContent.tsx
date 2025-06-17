@@ -2,7 +2,7 @@
 
 import { useParams } from 'react-router-dom';
 import { useUserProfile } from '../features/profile/hooks/useUserProfile';
-import { PostList } from '../components/post/PostList';
+import { PostList } from '../features/post/PostList';
 import BackHeader from '../components/header/BackHeader';
 import Profile from '../features/profile/components/Profile';
 import styles from './ProfileContent.module.css';
