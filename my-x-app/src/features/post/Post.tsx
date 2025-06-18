@@ -3,6 +3,9 @@ import { MediaPreview } from '../media/components/MediaPreview';
 import styles from './Post.module.css';
 import { FaRegComment, FaRetweet, FaHeart, FaLink } from 'react-icons/fa';
 import { usePostActions } from './hooks/usePostActions';
+import { usePostClickNavigation } from './hooks/usePostClickNavigation';
+import { useUserClickNavigation } from './hooks/useUserClickNavigation';
+import { useReplyToClickNavigation } from './hooks/useReplyToClickNavigation';
 
 // 時間表示フォーマット関数
 const formatTimeAgo = (dateString: string) => {
@@ -28,16 +31,29 @@ export const Post = ({ post }: { post: PostData }) => {
     reposted,
     toggleRepost,
   } = usePostActions(post.id, post.stats.likes, false, post.stats.reposts, false);
+
+  const { handlePostClick } = usePostClickNavigation(post.id); // 使用
+  const { handleUserClick } = useUserClickNavigation(post.author.username);
+  const { handleReplyToClick } = useReplyToClickNavigation(post.replyTo ?? '');
+
   return (
-    <div className={styles.post}>
+    <div className={styles.post} onClick={handlePostClick}>
+        
       <div className={styles.avatarContainer}>
         <img 
           src={post.author.iconUrl} 
           alt={`${post.author.displayName}のアイコン`} 
           className={styles.avatar} 
+          onClick={handleUserClick}
         />
       </div>
       <div className={styles.mainContent}>
+      {post.replyTo && 
+            <div className={styles.replyInfo}
+              onClick={handleReplyToClick}>
+              <FaLink className={styles.replyIcon} />
+              <span>返信先</span>
+            </div>}
         <div className={styles.header}>
           <span className={styles.authorName}>{post.author.displayName}</span>
           <span className={styles.username}>@{post.author.username}</span>
@@ -51,23 +67,22 @@ export const Post = ({ post }: { post: PostData }) => {
           )}
         </div>
         <div className={styles.stats}>
-          <div className={styles.statItem}>
+          <div className={styles.statItem} data-non-navigable>
             <FaRegComment />
             <span>{post.stats.comments}</span>
           </div>
-          <div className={styles.statItem} onClick={toggleRepost}>
+          <div className={styles.statItem} data-non-navigable onClick={(e) => { e.stopPropagation(); toggleRepost(); }}>
             <FaRetweet color={reposted ? '#00ba7c' : undefined}/>
             <span>{reposts}</span>
           </div>
-          <div className={styles.statItem} onClick={toggleLike}>
+          <div className={styles.statItem} data-non-navigable onClick={(e) => { e.stopPropagation(); toggleLike(); }}>
             <FaHeart color={liked ? '#f91880' : undefined} />
             <span>{likes}</span>
-          </div>
-          <div className={styles.statItem}>
-            <FaLink />
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
+
+export default Post;

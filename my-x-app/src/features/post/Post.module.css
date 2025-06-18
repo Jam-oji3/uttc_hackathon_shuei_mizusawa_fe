@@ -22,6 +22,11 @@
   .mainContent {
     flex: 1;
   }
+
+  /*返信情報*/
+  .replyInfo {
+    color: #1d9bf0;
+  }
   
   .header {
     display: flex;
