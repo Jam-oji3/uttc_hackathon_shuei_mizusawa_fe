@@ -21,7 +21,7 @@ export const deleteRepost = async (postId: string, userId: string) => {
         userId: userId,
         postId: postId,
     });
-    const resJSON = await apiFetch<{}>(`/Reposts?${query.toString()}`, {
+    const resJSON = await apiFetch<{}>(`/reposts?${query.toString()}`, {
         method: "DELETE",
     });
     return resJSON;

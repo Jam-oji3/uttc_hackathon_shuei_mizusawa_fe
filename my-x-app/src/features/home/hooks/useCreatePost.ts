@@ -9,6 +9,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
   const [uploadedType, setUploadedType] = useState<'photo' | 'model' | null>(null);
   const [fileToUpload, setFileToUpload] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [replyTo, setReplyTo] = useState<string | null>(null); // 返信先のポストID
 
   const { user } = useAuthContext();
   const { uploadFile, isLoading } = useStorageUpload();
@@ -49,7 +50,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
         text,
         mediaUrl,
         mediaType: uploadedType,
-        replyTo: null,
+        replyTo,
         repostRef: null,
       });
 
@@ -67,6 +68,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
         },
         text,
         createdAt: now.toISOString(),
+        replyTo,
         mediaType: uploadedType,
         mediaUrl,
         stats: {
@@ -102,5 +104,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
     isUploading: isLoading,
     handlePost,
     userIconUrl: user?.iconUrl || 'https://i.pravatar.cc/150?u=a042581f4e29026704e',
+    replyTo,         // 返信先のポストID
+    setReplyTo,      // 返信先のポストIDを設定する関数
   };
 };

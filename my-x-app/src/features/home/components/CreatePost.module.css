@@ -19,6 +19,14 @@
     display: flex;
     flex-direction: column;
   }
+  .replyTo {
+    color: #71767b;
+  }
+
+  .mention {
+    color: #1d9bf0;
+    font-weight: bold;
+}
   
   .textarea {
     background-color: transparent;
