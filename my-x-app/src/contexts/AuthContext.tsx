@@ -9,6 +9,7 @@ type AuthContextType = {
   user: UserData | null;
   isLoading: boolean;
   error: Error | null;
+  idToken: string | null;
   signInWithGoogle: () => Promise<void>;
 };
 
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true); // 初回ローディングもtrue
   const [error, setError] = useState<Error | null>(null);
+  const [idToken, setIdToken] = useState<string | null>(null);
 
   // Googleログイン処理
   const signInWithGoogle = async () => {
@@ -29,6 +31,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const result = await signInWithPopup(auth, provider);
       const idToken = await result.user.getIdToken();
+      setIdToken(idToken);
 
       const res = await verifyUserWithBackend(idToken);
 
@@ -52,6 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error("Google Sign-In Error:", err);
       setError(err instanceof Error ? err : new Error('An unknown error occurred'));
       setUser(null);
+      setIdToken(null);
     } finally {
       setIsLoading(false);
     }
@@ -62,12 +66,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (!firebaseUser) {
         setUser(null);
+        setIdToken(null);
         setIsLoading(false);
         return;
       }
 
       try {
         const idToken = await firebaseUser.getIdToken();
+        setIdToken(idToken);
+        
         const res = await verifyUserWithBackend(idToken);
 
         if (!res.success || !res.user) {
@@ -79,16 +86,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         console.error('Auth check failed:', err);
         setError(err instanceof Error ? err : new Error('Unknown error'));
         setUser(null);
+        setIdToken(null);
       } finally {
         setIsLoading(false);
       }
     });
 
-    return () => unsubscribe();
+    const unsubscribeToken = auth.onIdTokenChanged(async (user) => {
+      if (user) {
+        const token = await user.getIdToken();
+        setIdToken(token);
+      } else {
+        setIdToken(null);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+      unsubscribeToken();
+    }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, error, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, isLoading, error, idToken, signInWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );

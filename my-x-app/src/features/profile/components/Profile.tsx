@@ -1,28 +1,24 @@
 import React from 'react';
 import styles from './Profile.module.css';
-import { UserData } from '@/types/UserData';
+import { UserProfile } from '@/types/UserData';
 
 type UserProfileProps = {
-  user: UserData;
-  followersCount: number;
-  followingCount: number;
+  profile: UserProfile;
 };
 
 const Profile: React.FC<UserProfileProps> = ({
-  user,
-  followersCount,
-  followingCount,
+  profile: prof
 }) => {
   return (
     <div className={styles.profileContainer}>
-      <img src={user.iconUrl} alt={`${user.displayName}のアイコン`} className={styles.icon} />
+      <img src={prof.iconUrl} alt={`${prof.displayName}のアイコン`} className={styles.icon} />
       <div className={styles.info}>
-        <h2>{user.displayName}</h2>
-        <p className={styles.username}>@{user.username}</p>
-        <p className={styles.bio}>{user.bio}</p>
+        <h2>{prof.displayName}</h2>
+        <p className={styles.username}>@{prof.username}</p>
+        <p className={styles.bio}>{prof.bio}</p>
         <div className={styles.follows}>
-          <span><strong>{followingCount}</strong> フォロー中</span>
-          <span><strong>{followersCount}</strong> フォロワー</span>
+          <span><strong>{prof.stats.followingCount}</strong> フォロー中</span>
+          <span><strong>{prof.stats.followerCount}</strong> フォロワー</span>
         </div>
       </div>
     </div>

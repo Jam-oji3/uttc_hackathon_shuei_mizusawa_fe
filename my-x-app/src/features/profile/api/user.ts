@@ -1,26 +1,22 @@
-import { UserData } from '@/types/UserData';
-
-export type UserProfile = {
-    user: UserData
-    followersCount: number;
-    followingCount: number;
-  };
+import { UserData, UserProfile } from '@/types/UserData';
+import { apiFetch } from '../../../api/apiClient';
+import { FetchUserProfileResponse } from '@/types/api';
   
-  export const getUserProfile = async (username: string): Promise<UserProfile> => {
-    // 仮のAPI（実際はfetchなどで取得）
-    return {
-      user:{
-        id: "abcdefghijklmnopqrstuvwxyz12",
-        username: username,
-        displayName: "テスト ユーザー",
-        email: "test@test.com",
-        bio: "これはテストユーザーのプロフィールです。",
-        iconUrl: "https://example.com/icon.png",
-        createdAt: "2023-01-01T00:00:00Z",
-        updatedAt: "2023-01-02T00:00:00Z",
-      },
-      followersCount: 120,
-      followingCount: 80,
-    };
+  export const getUserProfile = async (username: string, idToken: string): Promise<UserProfile> => {
+    const resJSON = await apiFetch<FetchUserProfileResponse>(`/users/${username}`,
+      {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        },
+      }
+    );
+    if (!resJSON) {
+      throw new Error('Failed to fetch user profile: No response from server');
+    }
+    if (!resJSON.success) {
+      throw new Error(resJSON.message || 'Failed to fetch user profile');
+    }
+    return resJSON.profile;
   };
   

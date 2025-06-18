@@ -1,4 +1,4 @@
-import { UserData } from './UserData';
+import { UserData, UserProfile } from './UserData';
 import { PostData } from './PostData';
 import { LikeData } from './LikeData';
 
@@ -36,7 +36,13 @@ export type CreatePostResponse = {
     post: string;
 };
 
-export type FetchRecentPostsResponse = {
+export type FetchPostResponse = {
+    success: boolean;
+    message: string;
+    post: PostData;
+}
+
+export type FetchPostsResponse = {
     success: boolean;
     message: string;
     posts: PostData[];
@@ -45,5 +51,11 @@ export type FetchRecentPostsResponse = {
 export type CreateLikeResponse = {
     success: boolean;
     like: LikeData;
+    message: string;
+}
+
+export type FetchUserProfileResponse = {
+    success: boolean;
+    profile: UserProfile;
     message: string;
 }
