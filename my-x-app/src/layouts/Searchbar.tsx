@@ -1,8 +1,19 @@
-import styles from './Searchbar.module.css';
 import React from 'react';
+import styles from './Searchbar.module.css';
 import { FaSearch } from 'react-icons/fa';
+import TrendList from '../features/trend/components/TrendList';
+import { useTrends } from '../features/trend/hooks/useTrends';
 
 const Searchbar = () => {
+  const {trends, setTrends, loading ,error} = useTrends();
+
+  if (loading) {
+    return <div className={styles.loading}>トレンドを読み込み中...</div>;
+  }
+  if (error) {
+    return <div className={styles.error}>トレンドの読み込みに失敗しました: {error}</div>;
+  }
+
   return (
     <aside className={styles.searchbar}>
       <div className={styles.searchBox}>
@@ -13,28 +24,9 @@ const Searchbar = () => {
           className={styles.searchInput}
         />
       </div>
-      <div className={styles.trends}>
-        <h3 className={styles.trendsTitle}>トレンド</h3>
-        <ul className={styles.trendList}>
-          <TrendItem title="DELTARUNE" tweets="12.3万件のポスト" />
-          <TrendItem title="マリオカートワールド" tweets="6.7万件のポスト" />
-          <TrendItem title="進振り" tweets="3.1万件のポスト" />
-        </ul>
-      </div>
+      <TrendList trends={trends} />
     </aside>
   );
 };
-
-type TrendItemProps = {
-  title: string;
-  tweets: string;
-};
-
-const TrendItem = ({ title, tweets }: TrendItemProps) => (
-  <li className={styles.trendItem}>
-    <div className={styles.trendTitle}>{title}</div>
-    <div className={styles.trendTweets}>{tweets}</div>
-  </li>
-);
 
 export default Searchbar;

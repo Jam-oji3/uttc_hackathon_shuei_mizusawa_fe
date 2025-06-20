@@ -1,6 +1,8 @@
 import { UserData, UserProfile } from './UserData';
 import { PostData } from './PostData';
 import { LikeData } from './LikeData';
+import { TrendData } from './TrendData';
+import { NotificationData } from './NotificationData';
 
 export type VerifyUserResponse = {
     success: boolean;
@@ -57,5 +59,22 @@ export type CreateLikeResponse = {
 export type FetchUserProfileResponse = {
     success: boolean;
     profile: UserProfile;
+    message: string;
+}
+
+export type SimpleResponse = {
+    success: boolean;
+    message: string;
+}
+
+export type FetchTrendsResponse = {
+    success: boolean;
+    trends: TrendData[];
+    message: string;
+}
+
+export type FetchNotificationsResponse = {
+    success: boolean;
+    notifications: NotificationData[];
     message: string;
 }
