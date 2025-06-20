@@ -18,12 +18,12 @@ export const useFetchPost = (postId: string) => {
   useEffect(() => {
     if (!isAuthLoading && user?.id && !hasLoaded.current) {
       hasLoaded.current = true;
-
+  
+      setLoading(true); // ← ここで即 setLoading(true) にしておく
+  
       const fetchPost = async () => {
-        if (loading) return;  // 既に読み込み中ならスキップ
-        setLoading(true);
         setError(null);
-
+  
         try {
           const json = await fetchPostById(user.id, postId);
           if (!json) throw new Error('No response from server');
@@ -35,10 +35,11 @@ export const useFetchPost = (postId: string) => {
           setLoading(false);
         }
       };
-
+  
       fetchPost();
     }
   }, [user?.id, isAuthLoading, postId]);
+  
 
   return { post, loading, error };
 };

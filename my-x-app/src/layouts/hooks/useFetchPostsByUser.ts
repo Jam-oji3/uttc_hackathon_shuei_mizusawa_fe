@@ -13,11 +13,15 @@ export const useFetchPostsByUser = (targetUserId: string, limit = 20, offset = 0
 
   const loadPosts = async () => {
     if (!user || isAuthLoading || loading) return;
-
+    if (!targetUserId) return
+  
+    hasLoaded.current = true;
+    
     setLoading(true);
     setError(null);
     try {
-      const json = await fetchPostsByUser(targetUserId, user.id, limit, offset);
+      const json = await fetchPostsByUser(user.id, targetUserId, limit, offset);
+      console.log('useFetchPostsByUser', json);
       if (!json) {
         throw new Error('No response from server');
       }

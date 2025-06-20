@@ -22,6 +22,7 @@ export const useFetchRecentPosts = (limit = 20, offset = 0) => {
         throw new Error('No response from server');
       }
       if (json.success) {
+        console.log('fetchRecentPosts', json.posts);
         setPosts(json.posts);
       } else {
         setError(json.message || 'Failed to load posts');
