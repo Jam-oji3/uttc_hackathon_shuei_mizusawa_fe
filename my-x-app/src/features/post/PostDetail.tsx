@@ -21,7 +21,7 @@ export const PostDetail = ({post}: {post: PostData}) => {
     reposts,
     reposted,
     toggleRepost,
-  } = usePostActions(post.id, post.stats.likes, false, post.stats.reposts, false);
+  } = usePostActions(post.id, post.stats.likes, post.userActions.liked, post.stats.reposts, post.userActions.reposted);
 
   const { handleReplyToClick } = useReplyToClickNavigation(post.replyTo ?? '');
 

@@ -30,7 +30,7 @@ export const Post = ({ post }: { post: PostData }) => {
     reposts,
     reposted,
     toggleRepost,
-  } = usePostActions(post.id, post.stats.likes, false, post.stats.reposts, false);
+  } = usePostActions(post.id, post.stats.likes, post.userActions.liked, post.stats.reposts, post.userActions.reposted);
 
   const { handlePostClick } = usePostClickNavigation(post.id); // 使用
   const { handleUserClick } = useUserClickNavigation(post.author.username);
