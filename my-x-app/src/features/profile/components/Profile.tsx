@@ -4,10 +4,16 @@ import { UserProfile } from '@/types/UserData';
 
 type UserProfileProps = {
   profile: UserProfile;
+  viewerId: string;
+  isFollowing?: boolean;
+  onFollowToggle: () => void;
 };
 
 const Profile: React.FC<UserProfileProps> = ({
-  profile: prof
+  profile: prof,
+  viewerId,
+  isFollowing = false,
+  onFollowToggle,
 }) => {
   return (
     <div className={styles.profileContainer}>
@@ -20,6 +26,14 @@ const Profile: React.FC<UserProfileProps> = ({
           <span><strong>{prof.stats.followingCount}</strong> フォロー中</span>
           <span><strong>{prof.stats.followerCount}</strong> フォロワー</span>
         </div>
+        {viewerId !== prof.id ?
+        <button
+          className={`${styles.followButton} ${isFollowing ? styles.following : ''}`}
+          onClick={onFollowToggle}
+          type="button"
+        >
+          {isFollowing ? 'フォロー解除' : 'フォローする'}
+        </button>: null}
       </div>
     </div>
   );
