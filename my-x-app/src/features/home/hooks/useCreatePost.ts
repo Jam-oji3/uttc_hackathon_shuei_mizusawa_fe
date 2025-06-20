@@ -33,7 +33,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
 
   const handlePost = async () => {
     if (!user) {
-      alert('You must be logged in to create a post.');
+      console.log('You must be logged in to create a post.');
       return;
     }
 
@@ -53,8 +53,6 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
         replyTo,
         repostRef: null,
       });
-
-      alert('Post created successfully!');
 
       const now = new Date();
 

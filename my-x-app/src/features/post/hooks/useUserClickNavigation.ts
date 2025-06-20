@@ -16,7 +16,7 @@ export const useUserClickNavigation = (username: string) => {
       return;
     }
 
-    navigate(`/user/${username}`);
+    navigate(`/users/${username}`);
   };
 
   return { handleUserClick };
