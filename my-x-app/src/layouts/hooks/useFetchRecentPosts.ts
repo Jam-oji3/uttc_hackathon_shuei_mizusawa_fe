@@ -3,13 +3,13 @@ import { PostData } from '@/types/PostData';
 import { fetchRecentPosts } from '../api/posts';
 import { useAuthContext } from '../../contexts/AuthContext';
 
-export const useFetchRecentPosts = (limit = 20, offset = 0) => {
+export const useFetchRecentPosts = (limit = 40, offset = 0) => {
   const [posts, setPosts] = useState<PostData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { idToken, isLoading: isAuthLoading } = useAuthContext();
 
-  const hasLoaded = useRef(false); // ✅ 一度だけloadPostsするためのフラグ
+  const hasLoaded = useRef(false);
 
   const loadPosts = async () => {
     if (!idToken || isAuthLoading || loading) return;
