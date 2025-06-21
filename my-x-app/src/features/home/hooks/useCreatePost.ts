@@ -11,8 +11,9 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [replyTo, setReplyTo] = useState<string | null>(null); // 返信先のポストID
 
-  const { user } = useAuthContext();
+  const { user, idToken, isLoading: isAuthLoading } = useAuthContext();
   const { uploadFile, isLoading } = useStorageUpload();
+
 
   const handleUpload = (file: File | null, type: 'photo' | 'model' | null) => {
     if (!file || !type) {
@@ -32,7 +33,7 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
   };
 
   const handlePost = async () => {
-    if (!user) {
+    if (!user || !idToken|| isAuthLoading) {
       console.log('You must be logged in to create a post.');
       return;
     }
@@ -45,8 +46,8 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
         mediaUrl = await uploadFile(fileToUpload);
       }
 
-      await createPost({
-        userId: user.id,
+      const postId = await createPost(idToken,
+        {
         text,
         mediaUrl,
         mediaType: uploadedType,
@@ -57,12 +58,12 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
       const now = new Date();
 
       onPostCreated?.({
-        id: user.id,
+        id: postId,
         author: {
           id: user.id,
           displayName: user.displayName,
           username: user.username,
-          iconUrl: user.iconUrl || 'https://i.pravatar.cc/150?u=a042581f4e29026704e',
+          iconUrl: user.iconUrl,
         },
         text,
         createdAt: now.toISOString(),
@@ -97,12 +98,12 @@ export const useCreatePostLogic = (onPostCreated?: (newpost: PostData) => void) 
     text,
     setText,
     handleUpload,
-    previewUrl,      // ここでプレビューURLを返すので、表示に使える
+    previewUrl,
     uploadedType,
     isUploading: isLoading,
     handlePost,
-    userIconUrl: user?.iconUrl || 'https://i.pravatar.cc/150?u=a042581f4e29026704e',
-    replyTo,         // 返信先のポストID
-    setReplyTo,      // 返信先のポストIDを設定する関数
+    userIconUrl: user?.iconUrl,
+    replyTo, 
+    setReplyTo,   
   };
 };

@@ -7,12 +7,12 @@ export const useFetchPostsByUser = (targetUserId: string, limit = 20, offset = 0
   const [posts, setPosts] = useState<PostData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user, isLoading: isAuthLoading } = useAuthContext();
+  const { idToken, isLoading: isAuthLoading } = useAuthContext();
 
   const hasLoaded = useRef(false);
 
   const loadPosts = async () => {
-    if (!user || isAuthLoading || loading) return;
+    if (!idToken || isAuthLoading || loading) return;
     if (!targetUserId) return
   
     hasLoaded.current = true;
@@ -20,7 +20,7 @@ export const useFetchPostsByUser = (targetUserId: string, limit = 20, offset = 0
     setLoading(true);
     setError(null);
     try {
-      const json = await fetchPostsByUser(user.id, targetUserId, limit, offset);
+      const json = await fetchPostsByUser(idToken, targetUserId, limit, offset);
       if (!json) {
         throw new Error('No response from server');
       }
@@ -42,11 +42,11 @@ export const useFetchPostsByUser = (targetUserId: string, limit = 20, offset = 0
   }, [limit, offset, targetUserId]);
 
   useEffect(() => {
-    if (!isAuthLoading && user?.id && !hasLoaded.current) {
+    if (!isAuthLoading && idToken && !hasLoaded.current) {
       hasLoaded.current = true;
       loadPosts();
     }
-  }, [user?.id, isAuthLoading, limit, offset, targetUserId]);
+  }, [idToken, isAuthLoading, limit, offset, targetUserId]);
 
   return { posts, loading, error, reload: loadPosts };
 };

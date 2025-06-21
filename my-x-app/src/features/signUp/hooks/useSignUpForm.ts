@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useStorageUpload } from '../../../hooks/useStorageUpload';
 import { validateSignUpForm, SignUpFormData, SignUpFormErrors } from '../validators/signUpValidator';
-import { registerUser } from '../api/registerApi'; // 👈 作成したAPI関数をインポート
+import { registerUser } from '../api/registerApi';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 export const useSignUpForm = () => {
   const navigate = useNavigate();
@@ -22,7 +23,8 @@ export const useSignUpForm = () => {
   const [errors, setErrors] = useState<SignUpFormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const { uploadFile, isLoading: isUploading, error: uploadError } = useStorageUpload();
+  const { uploadFile, isLoading: isUploading, error: uploadError } = useStorageUpload(); 
+  const { idToken, isLoading: isAuthLoading } = useAuthContext(); // 👈 認証情報を取得
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -40,6 +42,11 @@ export const useSignUpForm = () => {
   
     if (!id || !email) {
       setErrors({ username: 'ユーザーIDまたはメールアドレスが見つかりませんでした。' });
+      return;
+    }
+
+    if (!idToken || isAuthLoading) {
+      setErrors({ username: '認証情報が取得できません。' });
       return;
     }
   
@@ -67,8 +74,8 @@ export const useSignUpForm = () => {
         iconUrl,
       };
   
-      const result = await registerUser(submissionData); // 👈 JSONで送信
-  
+      const result = await registerUser(idToken, submissionData); // 👈 JSONで送信
+
       console.log('Registration successful:', result.message);
       alert('アカウント作成成功！');
       navigate('/home', { state: { user: result.user } });

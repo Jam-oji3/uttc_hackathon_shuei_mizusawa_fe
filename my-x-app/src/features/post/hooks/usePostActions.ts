@@ -9,21 +9,21 @@ export const usePostActions = (postId: string, initialLikes: number, initialLike
   const [reposts, setReposts] = useState(initialReposts);
   const [reposted, setReposted] = useState(initialReposted);
   const [isProcessing, setIsProcessing] = useState(false);
-  const { user } = useAuthContext();
+  const { user, idToken, isLoading: isAuthLoading } = useAuthContext();
   const toggleLike = async () => {
     if (isProcessing) return;
     setIsProcessing(true);
-    if (!user) {
+    if (!user || !idToken || isAuthLoading) {
       console.error('ユーザーがログインしていません');
       setIsProcessing(false);
       return;
     }
     try {
       if (!liked) {
-        await createLike(postId, user.id);
+        await createLike(idToken, postId);
       }
       else {
-        await deleteLike(postId, user.id);
+        await deleteLike(idToken, postId);
       }
       setLiked(!liked);
       setLikes((prev) => prev + (liked ? -1 : 1));
@@ -37,17 +37,17 @@ export const usePostActions = (postId: string, initialLikes: number, initialLike
   const toggleRepost = async () => {
     if (isProcessing) return;
     setIsProcessing(true);
-    if (!user) {
+    if (!user || !idToken || isAuthLoading) {
       console.error('ユーザーがログインしていません');
       setIsProcessing(false);
       return;
     }
     try {
       if (!reposted) {
-        await createRepost(postId, user.id);
+        await createRepost(idToken, postId);
       }
       else {
-        await deleteRepost(postId, user.id);
+        await deleteRepost(idToken, postId);
       }
       setReposted(!reposted);
       setReposts((prev) => prev + (reposted ? -1 : 1));

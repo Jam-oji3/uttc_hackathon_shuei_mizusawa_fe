@@ -12,8 +12,21 @@ export type VerifyUserResponse = {
     user?: UserData;
 }
 
+export type CreateUserPayload = {
+  email: string;
+  username: string;
+  displayName: string;
+  bio: string;
+  iconUrl: string;
+}
+
+export type RegisterSuccessResponse = {
+    success: boolean;
+    user: UserData;
+    message: string;
+}
+
 export type CreatePostPayload ={
-    userId: string;
     text: string;
     mediaType: 'photo' | 'model' | null;
     mediaUrl: string | null;
@@ -21,7 +34,7 @@ export type CreatePostPayload ={
     repostRef?: string | null;
   }
 
-export type RowPostData = {
+export type RawPostData = {
     id: string;
     userId: string;
     text: string;
@@ -35,7 +48,7 @@ export type RowPostData = {
 export type CreatePostResponse = {
     success: boolean;
     message: string;
-    post: string;
+    post: RawPostData;
 };
 
 export type FetchPostResponse = {

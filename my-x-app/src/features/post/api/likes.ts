@@ -1,10 +1,13 @@
 import { apiFetch } from "../../../api/apiClient";
 import { LikeData } from "@/types/LikeData";
 
-export const createLike = async (postId: string, userId: string) => {
+export const createLike = async (idToken: string, postId: string) => {
   const resJSON = await apiFetch<{ success: boolean; like: LikeData; message?: string }>("/likes", {
     method: "POST",
-    body: JSON.stringify({ postId, userId }),
+    headers: {
+      'Authorization': `Bearer ${idToken}`,
+    },
+    body: JSON.stringify({ postId}),
   });
   if (!resJSON) {
     throw new Error("Failed to create like: No response from server");
@@ -16,13 +19,15 @@ export const createLike = async (postId: string, userId: string) => {
   return resJSON;
 }
 
-export const deleteLike = async (postId: string, userId: string) => {
+export const deleteLike = async (idToken: string, postId: string) => {
     const query = new URLSearchParams({
-        userId: userId,
         postId: postId,
     });
     const resJSON = await apiFetch<{}>(`/likes?${query.toString()}`, {
         method: "DELETE",
+        headers: {
+            'Authorization': `Bearer ${idToken}`,
+        }
     });
     return resJSON;
     };

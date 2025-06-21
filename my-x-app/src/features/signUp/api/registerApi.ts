@@ -1,36 +1,18 @@
 import { UserData } from "@/types/UserData";
+import {CreateUserPayload, RegisterSuccessResponse} from "@/types/api";
+import { apiFetch } from "../../../api/apiClient";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+export const registerUser = async (idToken: string, payload: CreateUserPayload) => {
 
-interface RegisterSuccessResponse {
-    success: boolean;
-    user: UserData;
-    message: string;
-}
-
-interface SubmissionData {
-  id: string;
-  email: string;
-  username: string;
-  displayName: string;
-  bio: string;
-  iconUrl: string;
-}
-
-export const registerUser = async (submissionData: SubmissionData): Promise<RegisterSuccessResponse> => {
-  const response = await fetch(`${API_BASE_URL}/users`, {
-    method: 'POST',
+  const response = await apiFetch<RegisterSuccessResponse>("/users", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
     },
-    body: JSON.stringify(submissionData),
+    body: JSON.stringify(payload),
   });
-
-  if (!response.ok) {
-    const error = await response.json().catch(() => null);
-    const errorMessage = error?.message || `Server error: ${response.status}`;
-    throw new Error(errorMessage);
+  if (!response) {
+    throw new Error("Failed to register user: No response from server");
   }
-
-  return response.json();
+  return response;
 };
