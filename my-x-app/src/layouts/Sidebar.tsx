@@ -2,7 +2,7 @@ import styles from './Sidebar.module.css';
 import { FaHome, FaSearch, FaBell, FaUser, FaFeather, FaSignOutAlt } from 'react-icons/fa';
 import AppIcon from '../components/icons/AppIcon';
 import React from 'react';
-import { useSidebarNavigation } from './hooks/useSidebarNavigations';
+import { useSidebarNavigation } from '../features/navigation/hooks/useSidebarNavigations';
 
 const Sidebar = () => {
   const { items, handleClick, isActive } = useSidebarNavigation();

@@ -2,14 +2,14 @@
 
 import React, { useEffect } from 'react';
 import { PostData } from '@/types/PostData';
-import { CreatePostForm } from '../features/home/components/CreatePost';
-import { useCreatePostLogic } from '../features/home/hooks/useCreatePost';
-import { PostList } from '../features/post/PostList';
-import { PostDetail } from '../features/post/PostDetail';
+import { CreatePostForm } from '../features/post/components/CreatePost';
+import { useCreatePostLogic } from '../features/post/hooks/useCreatePost';
+import { PostList } from '../features/post/components/PostList';
+import { PostDetail } from '../features/post/components/PostDetail';
 import styles from './PostDetailView.module.css';
 import BackHeader from '../components/header/BackHeader';
-import { useFetchReplies } from './hooks/useFetchReplies';
-import { useFetchPost } from './hooks/useFetchPost';
+import { useFetchReplies } from '../features/post/hooks/useFetchReplies';
+import { useFetchPost } from '../features/post/hooks/useFetchPost';
 
 export const PostDetailView = ({postId}: {postId: string}) => {
   const { post, loading: postLoading, error: postError } = useFetchPost(postId);
