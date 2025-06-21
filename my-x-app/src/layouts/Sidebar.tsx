@@ -1,11 +1,13 @@
 import styles from './Sidebar.module.css';
-import { FaHome, FaSearch, FaBell, FaUser, FaFeather } from 'react-icons/fa';
+import { FaHome, FaSearch, FaBell, FaUser, FaFeather, FaSignOutAlt } from 'react-icons/fa';
 import AppIcon from '../components/icons/AppIcon';
 import React from 'react';
 import { useSidebarNavigation } from './hooks/useSidebarNavigations';
+import { useAuthContext } from '../contexts/AuthContext';
 
 const Sidebar = () => {
   const { items, handleClick, isActive } = useSidebarNavigation();
+  const { signOutUser } = useAuthContext();
 
   return (
     <aside className={styles.sidebar}>
@@ -32,6 +34,7 @@ const getIcon = (key: string): React.ReactElement => {
     case 'search': return <FaSearch />;
     case 'bell': return <FaBell />;
     case 'user': return <FaUser />;
+    case 'signOut': return <FaSignOutAlt/>;
     default: return <FaFeather />;
   }
 };

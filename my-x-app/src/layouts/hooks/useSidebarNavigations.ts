@@ -15,12 +15,16 @@ export const useSidebarNavigation = () => {
     }
   const items = [
     { label: 'ホーム', path: '/home', iconKey: 'home' },
-    { label: '検索', path: '/search', iconKey: 'search' },
+    { label: '検索', path: '/posts/search', iconKey: 'search' },
     { label: '通知', path: '/notifications', iconKey: 'bell' },
     { label: 'プロフィール', path: `/users/${user.username}`, iconKey: 'user' },
+    { label: 'ログアウト', path: '/', iconKey: 'signOut' },
   ];
 
-  const handleClick = (path: string) => {
+  const handleClick = (path: string, onClick?: ()=>void) => {
+    if (onClick) {
+      onClick();
+    }
     if (location.pathname !== path) {
       navigate(path);
     }

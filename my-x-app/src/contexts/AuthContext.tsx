@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { verifyUserWithBackend } from '../features/auth/api/authAPI';
@@ -11,6 +11,7 @@ type AuthContextType = {
   error: Error | null;
   idToken: string | null;
   signInWithGoogle: () => Promise<void>;
+  signOutUser: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -61,6 +62,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const signOutUser = async () => {
+    setIsLoading(true);
+    try {
+      await signOut(auth);
+      setUser(null);
+      setIdToken(null);
+      setError(null);
+    } catch (err) {
+      console.error('Sign-out failed:', err);
+      setError(err instanceof Error ? err : new Error('Sign-out failed'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+
   // 初回ロード時にFirebaseのセッションを復元
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -82,11 +99,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         } else {
           setUser(res.user);
         }
+        setIsLoading(false);
       } catch (err) {
         console.error('Auth check failed:', err);
         setError(err instanceof Error ? err : new Error('Unknown error'));
         setUser(null);
         setIdToken(null);
+        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
@@ -108,11 +127,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, error, idToken, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, isLoading, error, idToken, signInWithGoogle, signOutUser }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
 
 export const useAuthContext = (): AuthContextType => {
   const context = useContext(AuthContext);
