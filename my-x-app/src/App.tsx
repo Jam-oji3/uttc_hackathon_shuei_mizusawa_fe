@@ -8,6 +8,7 @@ import UserProfile from './pages/UserProfile';
 import PostDetailPage from './pages/PostDetailPage';
 import NotificationPage from './pages/NotificationPage';
 import './App.css';
+import SearchPage from './pages/SearchPage';
 
 const App: React.FC = () => {
   return (
@@ -18,7 +19,7 @@ const App: React.FC = () => {
       <Route path="/users/:username" element={<UserProfile />} />
       <Route path="/posts/:postId" element={<PostDetailPage />} />
       <Route path="/notifications" element={<NotificationPage />} />
-      {/* 他のルートもここに追加できます */}
+      <Route path="/posts/search" element={<SearchPage/>}/>
 
     </Routes>
   );
