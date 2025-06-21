@@ -1,5 +1,5 @@
 import Sidebar from '../layouts/Sidebar';
-import Searchbar from '../layouts/Searchbar';
+import TrendBar from '../layouts/TrendBar';
 import { NotificationContent } from '../layouts/NotificationContent';
 
 function NotificationPage() {
@@ -7,7 +7,7 @@ function NotificationPage() {
     <div className="mainLayout">
       <Sidebar />
       <NotificationContent />
-      <Searchbar />
+      <TrendBar />
     </div>
   );
 }

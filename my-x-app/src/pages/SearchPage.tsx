@@ -1,15 +1,16 @@
 import Sidebar from '../layouts/Sidebar';
 import TrendBar from '../layouts/TrendBar';
-import { HomeTimeline } from '../layouts/HomeTimeline';
+import SearchContent from '../layouts/SearchContent';
+import { useParams } from 'react-router-dom';
 
-function Home() {
+function SearchPage() {
   return (
     <div className="mainLayout">
       <Sidebar />
-      <HomeTimeline />
+      <SearchContent />
       <TrendBar />
     </div>
   );
 }
 
-export default Home;
+export default SearchPage;

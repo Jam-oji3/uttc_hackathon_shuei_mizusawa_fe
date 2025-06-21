@@ -1,5 +1,5 @@
 import Sidebar from '../layouts/Sidebar';
-import Searchbar from '../layouts/Searchbar';
+import TrendBar from '../layouts/TrendBar';
 import { PostDetailView } from '../layouts/PostDetailView';
 import { useParams } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ function PostDetailPage() {
     <div className="mainLayout">
       <Sidebar />
       <PostDetailView postId={postId} />
-      <Searchbar />
+      <TrendBar />
     </div>
   );
 }

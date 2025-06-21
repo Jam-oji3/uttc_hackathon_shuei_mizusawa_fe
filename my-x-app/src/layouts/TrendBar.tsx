@@ -3,7 +3,7 @@ import styles from './TrendBar.module.css';
 import TrendList from '../features/trend/components/TrendList';
 import { useTrends } from '../features/trend/hooks/useTrends';
 
-const Searchbar = () => {
+const TrendBar = () => {
   const {trends, loading ,error} = useTrends();
 
   if (loading) {
@@ -20,4 +20,4 @@ const Searchbar = () => {
   );
 };
 
-export default Searchbar;
+export default TrendBar;
