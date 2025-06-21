@@ -21,5 +21,7 @@ export type PostData = {
       liked: boolean;
       reposted: boolean;
     }
+    repostedBy?: string | null;
+    spoilerWord?: string | null; // ネタバレキーワード
   };
 
