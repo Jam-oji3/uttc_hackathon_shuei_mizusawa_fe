@@ -1,9 +1,9 @@
 'use client';
 
 import { useAuthContext } from '../contexts/AuthContext';
-import { useNotifications } from '../features/notifications/hooks/useNotifications';
-import { NotificationList } from '../features/notifications/components/NotificationList';
-import { useNotificationNavigation } from '../features/notifications/hooks/useNotificationNavigation';
+import { useNotifications } from '../features/notification/hooks/useNotifications';
+import { NotificationList } from '../features/notification/components/NotificationList';
+import { useNotificationNavigation } from '../features/notification/hooks/useNotificationNavigation';
 import styles from './NotificationContent.module.css';
 
 export const NotificationContent = () => {

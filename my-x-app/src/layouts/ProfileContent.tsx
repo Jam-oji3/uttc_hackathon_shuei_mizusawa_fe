@@ -1,11 +1,11 @@
 'use client';
 
-import { useUserProfile } from '../features/profile/hooks/useUserProfile';
-import { PostList } from '../features/post/PostList';
+import { useUserProfile } from '../features/user/hooks/useUserProfile';
+import { PostList } from '../features/post/components/PostList';
 import BackHeader from '../components/header/BackHeader';
-import Profile from '../features/profile/components/Profile';
+import Profile from '../features/user/components/Profile';
 import styles from './ProfileContent.module.css';
-import { useFetchPostsByUser } from './hooks/useFetchPostsByUser';
+import { useFetchPostsByUser } from '../features/post/hooks/useFetchPostsByUser';
 import { useAuthContext } from '../contexts/AuthContext';
 
 export const ProfileContent = ({ username }: { username: string }) => {

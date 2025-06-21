@@ -2,12 +2,11 @@
 
 import { useState } from 'react';
 import { PostData } from '@/types/PostData';
-import { CreatePostForm } from '../features/home/components/CreatePost';
-import { useCreatePostLogic } from '../features/home/hooks/useCreatePost';
-import { PostList } from '../features/post/PostList';
-import { Tabs } from '../features/home/components/Tabs';
+import { CreatePostForm } from '../features/post/components/CreatePost';
+import { useCreatePostLogic } from '../features/post/hooks/useCreatePost';
+import { PostList } from '../features/post/components/PostList';
 import styles from './HomeTimeline.module.css';
-import { useFetchRecentPosts } from './hooks/useFetchRecentPosts';
+import { useFetchRecentPosts } from '../features/post/hooks/useFetchRecentPosts';
 
 export const HomeTimeline = () => {
   const [activeTab, setActiveTab] = useState<'recommend' | 'following'>('recommend');
@@ -31,7 +30,6 @@ export const HomeTimeline = () => {
 
   return (
     <div className={styles.timeline}>
-      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className={styles.scrollArea}>
         <CreatePostForm
           text={text}

@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { PostList } from '../features/post/PostList';
+import { PostList } from '../features/post/components/PostList';
 import styles from './SearchContent.module.css';
-import { useSearchPosts } from './hooks/useSearchPosts';
+import { useSearchPosts } from '../features/post/hooks/useSearchPosts';
 import { useAuthContext } from '../contexts/AuthContext';
 import BackHeader from '../components/header/BackHeader';
-import { SearchBox } from '../features/post/SearchBox';
+import { SearchBox } from '../features/post/components/SearchBox';
 import { useNavigate } from 'react-router-dom';
 
 export const SearchContent = () => {
