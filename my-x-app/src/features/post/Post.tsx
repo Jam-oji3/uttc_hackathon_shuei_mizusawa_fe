@@ -6,8 +6,9 @@ import { usePostActions } from './hooks/usePostActions';
 import { usePostClickNavigation } from './hooks/usePostClickNavigation';
 import { useUserClickNavigation } from './hooks/useUserClickNavigation';
 import { useReplyToClickNavigation } from './hooks/useReplyToClickNavigation';
+import { useSpoiler } from './hooks/useSpoiler'; // 作成したフックをインポート
 
-// 時間表示フォーマット関数
+// 時間表示フォーマット関数 (変更なし)
 const formatTimeAgo = (dateString: string) => {
   const date = new Date(dateString);
   const now = new Date();
@@ -32,55 +33,81 @@ export const Post = ({ post }: { post: PostData }) => {
     toggleRepost,
   } = usePostActions(post.id, post.stats.likes, post.userActions.liked, post.stats.reposts, post.userActions.reposted);
 
-  const { handlePostClick } = usePostClickNavigation(post.id); // 使用
+  // カスタムフックにロジックを移譲
+  const { isSpoilerActive, handleRevealSpoiler } = useSpoiler(post.spoilerWord);
+  
+  const { handlePostClick } = usePostClickNavigation(post.id);
   const { handleUserClick } = useUserClickNavigation(post.author.username);
   const { handleReplyToClick } = useReplyToClickNavigation(post.replyTo ?? '');
 
+
   return (
-    <div className={styles.post} onClick={handlePostClick}>
-        
-      <div className={styles.avatarContainer}>
-        <img 
-          src={post.author.iconUrl} 
-          alt={`${post.author.displayName}のアイコン`} 
-          className={styles.avatar} 
-          onClick={handleUserClick}
-        />
+    <div className={styles.postContainer} onClick={isSpoilerActive ? undefined : handlePostClick}>
+      
+      <div className={`${styles.post} ${isSpoilerActive ? styles.blurred : ''}`}>
+        <div className={styles.avatarContainer}>
+          <img 
+            src={post.author.iconUrl} 
+            alt={`${post.author.displayName}のアイコン`} 
+            className={styles.avatar} 
+            onClick={handleUserClick}
+          />
+        </div>
+        <div className={styles.mainContent}>
+        {
+          post.repostedBy &&
+          <div className={styles.repostInfo}>
+            <FaRetweet className={styles.repostIcon} />
+            <span>@{post.repostedBy}さんがリポストしました</span>
+          </div>
+        }
+        {
+        post.replyTo && 
+          <div className={styles.replyInfo}
+            onClick={handleReplyToClick}>
+            <FaLink className={styles.replyIcon} />
+            <span>返信先</span>
+          </div>
+        }
+          <div className={styles.header}>
+            <span className={styles.authorName}>{post.author.displayName}</span>
+            <span className={styles.username}>@{post.author.username}</span>
+            <span className={styles.separator}>·</span>
+            <span className={styles.createdAt}>{formatTimeAgo(post.createdAt)}</span>
+          </div>
+          <p className={styles.content}>{post.text}</p>
+          <div>
+            {post.mediaUrl && post.mediaType && (
+              <MediaPreview url={post.mediaUrl} type={post.mediaType} />
+            )}
+          </div>
+          <div className={styles.stats}>
+            <div className={styles.statItem} data-non-navigable>
+              <FaRegComment />
+              <span>{post.stats.comments}</span>
+            </div>
+            <div className={styles.statItem} data-non-navigable onClick={(e) => { e.stopPropagation(); toggleRepost(); }}>
+              <FaRetweet color={reposted ? '#00ba7c' : undefined}/>
+              <span>{reposts}</span>
+            </div>
+            <div className={styles.statItem} data-non-navigable onClick={(e) => { e.stopPropagation(); toggleLike(); }}>
+              <FaHeart color={liked ? '#f91880' : undefined} />
+              <span>{likes}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className={styles.mainContent}>
-      {post.replyTo && 
-            <div className={styles.replyInfo}
-              onClick={handleReplyToClick}>
-              <FaLink className={styles.replyIcon} />
-              <span>返信先</span>
-            </div>}
-        <div className={styles.header}>
-          <span className={styles.authorName}>{post.author.displayName}</span>
-          <span className={styles.username}>@{post.author.username}</span>
-          <span className={styles.separator}>·</span>
-          <span className={styles.createdAt}>{formatTimeAgo(post.createdAt)}</span>
-        </div>
-        <p className={styles.content}>{post.text}</p>
-        <div>
-          {post.mediaUrl && post.mediaType && (
-            <MediaPreview url={post.mediaUrl} type={post.mediaType} />
-          )}
-        </div>
-        <div className={styles.stats}>
-          <div className={styles.statItem} data-non-navigable>
-            <FaRegComment />
-            <span>{post.stats.comments}</span>
-          </div>
-          <div className={styles.statItem} data-non-navigable onClick={(e) => { e.stopPropagation(); toggleRepost(); }}>
-            <FaRetweet color={reposted ? '#00ba7c' : undefined}/>
-            <span>{reposts}</span>
-          </div>
-          <div className={styles.statItem} data-non-navigable onClick={(e) => { e.stopPropagation(); toggleLike(); }}>
-            <FaHeart color={liked ? '#f91880' : undefined} />
-            <span>{likes}</span>
+      
+      {/* ネタバレが有効な場合にオーバーレイを表示 */}
+      {isSpoilerActive && (
+        <div className={styles.spoilerOverlay} onClick={handleRevealSpoiler}>
+          <div className={styles.spoilerContent}>
+            <span className={styles.spoilerAlertText}>ネタバレを含む可能性があります</span>
+            <span className={styles.spoilerWord}>{post.spoilerWord}</span>
+            <span className={styles.spoilerClickHint}>クリックして表示</span>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
