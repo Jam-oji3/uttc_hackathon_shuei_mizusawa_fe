@@ -1,0 +1,164 @@
+/* 既存のスタイルはそのまま */
+.post {
+  display: flex;
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.post:hover {
+  background-color: #ededed;
+}
+
+.avatarContainer {
+  margin-right: 12px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.mainContent {
+  flex: 1;
+}
+
+.repostInfo{
+  color: #71767b;
+}
+
+.replyInfo {
+  color: #1d9bf0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.authorName {
+  font-weight: bold;
+  color: #000000;
+}
+
+.username, .createdAt, .separator {
+  color: #71767b;
+}
+
+.content {
+  margin: 4px 0 12px;
+  color: #000000;
+  white-space: pre-wrap; /* 改行を反映させる */
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  max-width: 425px;
+  color: #71767b;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.statItem:hover {
+  color: #1d9bf0; /* ホバー時の色 */
+}
+
+.statItem:nth-child(2):hover {
+  color: #00ba7c; /* リポストのホバー色 */
+}
+.statItem:nth-child(3):hover {
+  color: #f91880; /* いいねのホバー色 */
+}
+
+/* --- ここからネタバレ機能用のスタイルを追加 --- */
+
+.postContainer {
+  position: relative; /* オーバーレイの基準点となります */
+  /* はみ出し防止のため、コンテナの境界で中身をクリップします */
+  overflow: hidden;
+  /* 投稿の下線がコンテナの外に出るように調整 */
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* 投稿自体の下線を削除（.postContainerが担当するため）*/
+.post {
+  border-bottom: none;
+}
+
+/* 投稿コンテンツをぼかすクラス */
+.blurred {
+  filter: blur(5px); /* ぼかしを少し弱めて上品に */
+  -webkit-filter: blur(5px);
+  pointer-events: none; /* ぼかし中の要素のクリックや選択を無効化 */
+  user-select: none;
+  transition: filter 0.3s ease-in-out;
+}
+
+/* ネタバレ警告のオーバーレイ */
+.spoilerOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  /* ホバー時に薄いグレーの背景を表示 */
+  transition: background-color 0.2s;
+}
+
+.spoilerOverlay:hover {
+  background-color: rgba(230, 236, 240, 0.5); /* 白系のページに合うホバー色 */
+}
+
+/* ネタバレ警告のコンテンツボックス */
+.spoilerContent {
+  padding: 12px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0; /* 薄い境界線 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 影をつけて浮かせる */
+  border-radius: 16px;
+  color: #0F1419; /* X(Twitter)ライクな黒色 */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 70%; /* 幅が広がりすぎないように制限 */
+}
+
+/* 「ネタバレ注意」のテキスト */
+.spoilerAlertText {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #536471; /* X(Twitter)ライクなグレー */
+}
+
+/* ネタバレキーワード */
+.spoilerWord {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 4px 0;
+  padding: 6px 10px;
+  background-color: #f7f9f9; /* 背景を非常に薄いグレーに */
+  border: 1px solid #cfd9de; /* 境界線 */
+  border-radius: 8px;
+  color: #0F1419;
+}
+
+/* 「クリックして表示」のヒント */
+.spoilerClickHint {
+  font-size: 0.9rem;
+  color: #536471;
+  opacity: 0.8;
+}

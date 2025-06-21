@@ -1,34 +1,22 @@
-/**
- * Defines the shape of the data sent to the backend.
- * This should match the Go backend struct.
- */
-export interface CreatePostPayload {
-    userId: string;
-    text: string;
-    mediaType: 'photo' | 'model' | null;
-    mediaUrl: string | null;
-    replyTo?: string | null;
-    repostRef?: string | null;
-  }
+import { apiFetch } from "../../../api/apiClient";
+import { CreatePostPayload, CreatePostResponse } from "@/types/api";
   
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  
-  export const createPost = async (payload: CreatePostPayload) => {
+  export const createPost = async (idToken: string, payload: CreatePostPayload) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/posts`, {
+      const res = await apiFetch<CreatePostResponse>('/posts', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`,
         },
         body: JSON.stringify(payload),
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create post');
+      })
+      if (!res) {
+        throw new Error('Failed to create post: No response from server');
       }
-  
-      return await response.json();
+      if (!res.post) {
+        throw new Error(res.message || 'Failed to create post');
+      }
+      return res.post.id;
     } catch (error) {
       console.error('Error creating post:', error);
       throw error;

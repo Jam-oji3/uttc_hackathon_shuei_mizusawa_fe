@@ -1,5 +1,5 @@
 import Sidebar from '../layouts/Sidebar';
-import Searchbar from '../layouts/Searchbar';
+import TrendBar from '../layouts/TrendBar';
 import { HomeTimeline } from '../layouts/HomeTimeline';
 
 function Home() {
@@ -7,7 +7,7 @@ function Home() {
     <div className="mainLayout">
       <Sidebar />
       <HomeTimeline />
-      <Searchbar />
+      <TrendBar />
     </div>
   );
 }

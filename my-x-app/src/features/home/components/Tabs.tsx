@@ -15,13 +15,6 @@ export const Tabs = ({ activeTab, setActiveTab }: TabProps) => {
         おすすめ
         {activeTab === 'recommend' && <div className={styles.activeIndicator} />}
       </button>
-      <button
-        className={`${styles.tabButton} ${activeTab === 'following' ? styles.active : ''}`}
-        onClick={() => setActiveTab('following')}
-      >
-        フォロー中
-        {activeTab === 'following' && <div className={styles.activeIndicator} />}
-      </button>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { FaPhotoVideo, FaCube } from 'react-icons/fa';
+import DefaultUserIcon from '../../../components/icons/DefaultUserIcon';
 import { MediaPreview } from '../../../features/media/components/MediaPreview';
 import styles from './CreatePost.module.css';
 
@@ -10,6 +11,10 @@ interface Props {
   uploadedType: 'photo' | 'model' | null;
   isUploading: boolean;
   handlePost: () => void;
+  userIconUrl?: string; // ユーザーのアイコンURL（オプション）
+  placeholder?: string; // テキストエリアのプレースホルダー
+  replyTo?: string; // 返信先のポストID（オプション）
+  replyToUsername?: string; // 返信先のユーザー名（オプション）
 }
 
 export const CreatePostForm = ({
@@ -20,6 +25,10 @@ export const CreatePostForm = ({
   uploadedType,
   isUploading,
   handlePost,
+  userIconUrl,
+  placeholder,
+  replyTo,
+  replyToUsername,
 }: Props) => {
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'photo' | 'model') => {
     const file = e.target.files?.[0];
@@ -29,23 +38,31 @@ export const CreatePostForm = ({
   };
 
   const onRemoveMedia = () => {
-    // nullを渡してアップロード済みメディアをリセット
     handleUpload(null, null);
   };
 
   return (
     <div className={styles.createPostContainer}>
       <div className={styles.avatarContainer}>
-        <img
-          src="https://i.pravatar.cc/150?u=my-avatar"
+        {
+          userIconUrl ? 
+          <img
+          src={userIconUrl}
           alt="自分のアバター"
           className={styles.avatar}
-        />
+        />:
+          <DefaultUserIcon size={48} alt="自分のアバター" />
+        }
+        
       </div>
       <div className={styles.formContainer}>
+        {replyToUsername && 
+          <div className={styles.replyTo}>
+            返信先: <span className={styles.mention}>@{replyToUsername}</span>さん
+          </div>}
         <textarea
           className={styles.textarea}
-          placeholder="いまどうしてる？"
+          placeholder={placeholder ? placeholder :  "いまどうしてる？"}
           value={text}
           onChange={(e) => setText(e.target.value)}
         />

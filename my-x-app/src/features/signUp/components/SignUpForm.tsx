@@ -23,14 +23,14 @@ const SignUpForm: React.FC = () => {
       {/* noValidateでブラウザのデフォルトバリデーションを無効化 */}
       <form onSubmit={handleSubmit} noValidate>
         <UserInputField
-          label="ユーザー名"
-          name="userName"
-          value={formData.userName}
+          label="ユーザー名 (@user)"
+          name="username"
+          value={formData.username}
           onChange={handleInputChange}
-          placeholder="@を含む半角英数字"
+          placeholder="5文字以上15文字以下の半角英数字"
           required
         />
-        {errors.userName && <p className={styles.error}>{errors.userName}</p>}
+        {errors.username && <p className={styles.error}>{errors.username}</p>}
 
         <UserInputField
           label="表示名"

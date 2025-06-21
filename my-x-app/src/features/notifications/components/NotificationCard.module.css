@@ -1,0 +1,28 @@
+.card {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+  }
+  
+  .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .username {
+    font-weight: bold;
+  }
+  
+  .timestamp {
+    font-size: 0.8rem;
+    color: gray;
+  }
+  

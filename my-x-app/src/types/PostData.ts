@@ -1,8 +1,9 @@
 export type PostData = {
     id: string;
     author: {
+      id: string;
       displayName: string;
-      userName: string; // @handle のようなユーザー名
+      username: string; // @handle のようなユーザー名
       iconUrl: string; // アイコン画像のURL
     };
     text: string;
@@ -16,4 +17,11 @@ export type PostData = {
       reposts: number;
       comments: number;
     };
+    userActions: {
+      liked: boolean;
+      reposted: boolean;
+    }
+    repostedBy?: string | null;
+    spoilerWord?: string | null; // ネタバレキーワード
   };
+

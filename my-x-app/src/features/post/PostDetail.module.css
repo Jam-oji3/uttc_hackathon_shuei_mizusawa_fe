@@ -1,0 +1,83 @@
+/* Post全体の囲い */
+.detailContainer {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  /*返信情報*/
+  .replyInfo {
+    color: #1d9bf0;
+  }
+  
+  /* ヘッダー */
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  /* プロフィール画像 */
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+  }
+  
+  /* 著者情報のテキスト */
+  .authorInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .authorName {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .username {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* 投稿テキスト */
+  .content {
+    font-size: 16px;
+    margin-bottom: 16px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+  
+  /* 投稿日時 */
+  .timestamp {
+    font-size: 14px;
+    color: #888;
+    margin: 12px 0;
+  }
+  
+  /* 統計表示の行 */
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    gap: 24px;
+    margin-top: 16px;
+  }
+  
+  .statItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+    transition: color 0.2s;
+  }
+  
+  .statItem:hover {
+    color: #000;
+  }
+  

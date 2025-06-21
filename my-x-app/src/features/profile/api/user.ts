@@ -1,26 +1,43 @@
-import { UserData } from '@/types/UserData';
+import { UserProfile } from '@/types/UserData';
+import { apiFetch } from '../../../api/apiClient';
+import { FetchUserProfileResponse, SimpleResponse } from '@/types/api';
+  
+  export const getUserProfile = async (username: string, idToken: string): Promise<UserProfile> => {
+    const resJSON = await apiFetch<FetchUserProfileResponse>(`/users/${username}`,
+      {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        },
+      }
+    );
+    if (!resJSON) {
+      throw new Error('Failed to fetch user profile: No response from server');
+    }
+    
+    return resJSON.profile;
+  };
 
-export type UserProfile = {
-    user: UserData
-    followersCount: number;
-    followingCount: number;
-  };
-  
-  export const getUserProfile = async (username: string): Promise<UserProfile> => {
-    // 仮のAPI（実際はfetchなどで取得）
-    return {
-      user:{
-        id: "abcdefghijklmnopqrstuvwxyz12",
-        username: username,
-        displayName: "テスト ユーザー",
-        email: "test@test.com",
-        bio: "これはテストユーザーのプロフィールです。",
-        iconUrl: "https://example.com/icon.png",
-        createdAt: "2023-01-01T00:00:00Z",
-        updatedAt: "2023-01-02T00:00:00Z",
+  export const followUser = async (userId: string, idToken: string): Promise<SimpleResponse> => {
+
+    const resJSON = await apiFetch<SimpleResponse>(`/users/${userId}/follow`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${idToken}`
       },
-      followersCount: 120,
-      followingCount: 80,
-    };
-  };
+    });
+    if (!resJSON) {
+      throw new Error('Failed to follow user: No response from server');
+    }
+    return resJSON
+  }
   
+  export const unfollowUser = async (userId: string, idToken: string): Promise<void>=> {
+    await apiFetch<{}>(`/users/${userId}/follow`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${idToken}`
+      },
+    });
+    return;
+  }

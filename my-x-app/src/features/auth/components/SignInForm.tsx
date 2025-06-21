@@ -5,7 +5,7 @@ import styles from './SignInForm.module.css';
 import AppIcon from '../../../components/icons/AppIcon';
 
 const SignInForm: React.FC = () => {
-  const { signInWithGoogle, isLoading, error } = useAuthContext(); // ここをuseAuthContextに
+  const { signInWithGoogle, isLoading, error } = useAuthContext(); 
 
   return (
     <div className={styles.content}>
