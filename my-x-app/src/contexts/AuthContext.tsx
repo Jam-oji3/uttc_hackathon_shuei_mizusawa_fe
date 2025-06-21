@@ -28,7 +28,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     setError(null);
     const provider = new GoogleAuthProvider();
-
+    provider.setCustomParameters({
+      prompt: 'select_account' // 毎回アカウント選択画面を表示
+    });
     try {
       const result = await signInWithPopup(auth, provider);
       const idToken = await result.user.getIdToken();
