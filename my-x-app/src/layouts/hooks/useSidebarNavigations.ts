@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 export const useSidebarNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, isLoading} = useAuthContext();
+  const { user, isLoading, signOutUser} = useAuthContext();
     if (isLoading || !user){
         return {
         items: [],
@@ -24,6 +24,10 @@ export const useSidebarNavigation = () => {
   const handleClick = (path: string, onClick?: ()=>void) => {
     if (onClick) {
       onClick();
+    }
+    if (path === '/') {
+      signOutUser();
+      return;
     }
     if (location.pathname !== path) {
       navigate(path);
