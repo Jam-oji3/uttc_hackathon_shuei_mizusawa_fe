@@ -1,31 +1,27 @@
 // components/TrendList.tsx
 import React from 'react';
-import styles from './TrendList.module.css'; // 必要に応じてTrendList.module.cssに分離してもOK
+import styles from './TrendList.module.css';
 import { TrendData } from '@/types/TrendData';
+import TrendItem from './TrendItem';
 
 type TrendListProps = {
-    trends: TrendData[] | null;
-    };
-    
+  trends: TrendData[] | null;
+  onClick?: (trend: TrendData) => void;
+};
 
-const TrendItem = (trend: TrendData) => (
-  <li className={styles.trendItem}>
-    <div className={styles.trendTitle}>{trend.word}</div>
-    <div className={styles.trendTweets}>{trend.count}</div>
-  </li>
-);
-
-const TrendList = ({ trends }: TrendListProps) => {
+const TrendList: React.FC<TrendListProps> = ({ trends, onClick }) => {
   return (
     <div className={styles.trends}>
       <h3 className={styles.trendsTitle}>トレンド</h3>
-      {!trends ? <div className={styles.trendList}>現在トレンドはありません</div> :
-      <ul className={styles.trendList}>
-      {trends.map((trend) => (
-        <TrendItem key={trend.word} {...trend} />
-      ))}
-    </ul>}
-      
+      {!trends ? (
+        <div className={styles.trendList}>現在トレンドはありません</div>
+      ) : (
+        <ul className={styles.trendList}>
+          {trends.map((trend) => (
+            <TrendItem key={trend.word} trend={trend} onClick={onClick} />
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
