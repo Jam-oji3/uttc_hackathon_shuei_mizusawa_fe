@@ -21,7 +21,6 @@ export const useFetchPostsByUser = (targetUserId: string, limit = 20, offset = 0
     setError(null);
     try {
       const json = await fetchPostsByUser(user.id, targetUserId, limit, offset);
-      console.log('useFetchPostsByUser', json);
       if (!json) {
         throw new Error('No response from server');
       }

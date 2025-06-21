@@ -7,7 +7,7 @@ export const useFetchPost = (postId: string) => {
   const [post, setPost] = useState<PostData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { user, isLoading: isAuthLoading } = useAuthContext();
+  const { isLoading: isAuthLoading, idToken } = useAuthContext();
 
   const hasLoaded = useRef(false);
 
@@ -16,7 +16,7 @@ export const useFetchPost = (postId: string) => {
   }, [postId]);
 
   useEffect(() => {
-    if (!isAuthLoading && user?.id && !hasLoaded.current) {
+    if (!isAuthLoading && idToken && !hasLoaded.current) {
       hasLoaded.current = true;
   
       setLoading(true); // ← ここで即 setLoading(true) にしておく
@@ -25,7 +25,7 @@ export const useFetchPost = (postId: string) => {
         setError(null);
   
         try {
-          const json = await fetchPostById(user.id, postId);
+          const json = await fetchPostById(idToken, postId);
           if (!json) throw new Error('No response from server');
           if (!json.success) throw new Error(json.message || 'Failed to load post');
           setPost(json.post);
@@ -38,7 +38,7 @@ export const useFetchPost = (postId: string) => {
   
       fetchPost();
     }
-  }, [user?.id, isAuthLoading, postId]);
+  }, [idToken, isAuthLoading, postId]);
   
 
   return { post, loading, error };

@@ -7,22 +7,21 @@ export const useFetchRecentPosts = (limit = 20, offset = 0) => {
   const [posts, setPosts] = useState<PostData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user, isLoading: isAuthLoading } = useAuthContext();
+  const { idToken, isLoading: isAuthLoading } = useAuthContext();
 
   const hasLoaded = useRef(false); // ✅ 一度だけloadPostsするためのフラグ
 
   const loadPosts = async () => {
-    if (!user || isAuthLoading || loading) return;
+    if (!idToken || isAuthLoading || loading) return;
 
     setLoading(true);
     setError(null);
     try {
-      const json = await fetchRecentPosts(user.id, limit, offset);
+      const json = await fetchRecentPosts(idToken, limit, offset);
       if (!json) {
         throw new Error('No response from server');
       }
       if (json.success) {
-        console.log('fetchRecentPosts', json.posts);
         setPosts(json.posts);
       } else {
         setError(json.message || 'Failed to load posts');
@@ -40,11 +39,11 @@ export const useFetchRecentPosts = (limit = 20, offset = 0) => {
   }, [limit, offset]);
 
   useEffect(() => {
-    if (!isAuthLoading && user?.id && !hasLoaded.current) {
+    if (!isAuthLoading && idToken && !hasLoaded.current) {
       hasLoaded.current = true;
       loadPosts();
     }
-  }, [user?.id, isAuthLoading, limit, offset]);
+  }, [idToken, isAuthLoading, limit, offset]);
 
   return { posts, loading, error, reload: loadPosts };
 };
