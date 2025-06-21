@@ -38,38 +38,39 @@ export const PostDetailView = ({postId}: {postId: string}) => {
     }
   }, [post, setReplyTo]);
 
-  if (postLoading) {
-    return <div className={styles.loading}>ポストを読み込み中...</div>;
-  }
-  if (postError) {
-    return <div className={styles.error}>ポストの読み込みに失敗しました: {postError}</div>;
-  }  
-  if (!post) {
-    return <div className={styles.error}>ポストが見つかりませんでした。</div>;
-  }
-
   return (
     <div className={styles.detailView}>
-      <BackHeader title="ポスト"/>
+      <BackHeader title="ポスト" />
       <div className={styles.scrollArea}>
-        <PostDetail post={post} />
-        <CreatePostForm
-            text={text}
-            setText={setText}
-            handleUpload={handleUpload}
-            uploadedUrl={previewUrl}
-            uploadedType={uploadedType}
-            isUploading={isUploading}
-            handlePost={handlePost}
-            userIconUrl={userIconUrl}
-            placeholder="このポストに返信する"
-            replyTo={postId}
-            replyToUsername={post.author.username}
-        />
-      {loading && <p>Loading replies...</p>}
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-      {!loading && !error && <PostList posts={replies} />}
+        {postLoading ? (
+          <div className={styles.loading}>ポストを読み込み中...</div>
+        ) : postError ? (
+          <div className={styles.error}>ポストの読み込みに失敗しました: {postError}</div>
+        ) : !post ? (
+          <div className={styles.error}>ポストが見つかりませんでした。</div>
+        ) : (
+          <>
+            <PostDetail post={post} />
+            <CreatePostForm
+              text={text}
+              setText={setText}
+              handleUpload={handleUpload}
+              uploadedUrl={previewUrl}
+              uploadedType={uploadedType}
+              isUploading={isUploading}
+              handlePost={handlePost}
+              userIconUrl={userIconUrl}
+              placeholder="このポストに返信する"
+              replyTo={postId}
+              replyToUsername={post.author.username}
+            />
+            {loading && <p className={styles.loading}>リプライを読み込み中...</p>}
+            {error && <p className={styles.error}>リプライの読み込みに失敗しました</p>}
+            {!loading && !error && <PostList posts={replies} />}
+          </>
+        )}
       </div>
     </div>
   );
+  
 };

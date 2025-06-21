@@ -45,8 +45,8 @@ export const HomeTimeline = () => {
         />
 
         {/* 読み込み中やエラーの表示も入れる */}
-        {loading && <p>Loading posts...</p>}
-        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+        {loading && <p className={styles.loading}>新しいポストを読み込み中...</p>}
+        {error && <p className={styles.error}>ポストの読み込みに失敗しました</p>}
 
         {!loading && !error && <PostList posts={posts} />}
       </div>

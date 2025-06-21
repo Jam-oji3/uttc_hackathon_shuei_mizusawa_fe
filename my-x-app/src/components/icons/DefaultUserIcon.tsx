@@ -1,4 +1,3 @@
-import React from 'react';
 
 type Props = {
   size?: number;
@@ -6,10 +5,10 @@ type Props = {
   className?: string;
 };
 
-const AppIcon: React.FC<Props> = ({ size = 32, alt = 'App Icon', className }) => {
+const DefaultUserIcon = ({ size = 32, alt = 'App Icon', className }: Props) => {
   return (
     <img
-      src="/assets/hackathonLogo.png"
+      src="/assets/kkrn_icon_user_1.svg"
       width={size}
       height={size}
       alt={alt}
@@ -18,4 +17,5 @@ const AppIcon: React.FC<Props> = ({ size = 32, alt = 'App Icon', className }) =>
   );
 };
 
-export default AppIcon;
+
+export default DefaultUserIcon;

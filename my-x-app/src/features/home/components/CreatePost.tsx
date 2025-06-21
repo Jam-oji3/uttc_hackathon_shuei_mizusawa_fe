@@ -1,4 +1,5 @@
 import { FaPhotoVideo, FaCube } from 'react-icons/fa';
+import DefaultUserIcon from '../../../components/icons/DefaultUserIcon';
 import { MediaPreview } from '../../../features/media/components/MediaPreview';
 import styles from './CreatePost.module.css';
 
@@ -37,18 +38,22 @@ export const CreatePostForm = ({
   };
 
   const onRemoveMedia = () => {
-    // nullを渡してアップロード済みメディアをリセット
     handleUpload(null, null);
   };
 
   return (
     <div className={styles.createPostContainer}>
       <div className={styles.avatarContainer}>
-        <img
-          src={userIconUrl || 'https://i.pravatar.cc/150?u=default_avatar'} // デフォルトのアバターURL}
+        {
+          userIconUrl ? 
+          <img
+          src={userIconUrl}
           alt="自分のアバター"
           className={styles.avatar}
-        />
+        />:
+          <DefaultUserIcon size={48} alt="自分のアバター" />
+        }
+        
       </div>
       <div className={styles.formContainer}>
         {replyToUsername && 

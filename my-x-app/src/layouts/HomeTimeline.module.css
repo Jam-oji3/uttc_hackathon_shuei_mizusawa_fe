@@ -11,6 +11,7 @@
 }
 
 .scrollArea {
+  width: 100%; /* 横幅を100%に設定 */
   flex: 1;            /* 残りの高さを全部使う */
   overflow-y: auto;   /* 縦スクロールを許可 */
   overflow-x: hidden; /* 横スクロールは隠す */
@@ -20,4 +21,12 @@
   font-size: 20px;
   font-weight: bold;
   color: #e7e9ea;
+}
+
+.loading,
+.error {
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  color: #888;
 }

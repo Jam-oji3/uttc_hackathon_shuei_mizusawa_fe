@@ -1,4 +1,5 @@
 import React from 'react';
+import DefaultUserIcon from '../../../components/icons/DefaultUserIcon';
 import styles from './Profile.module.css';
 import { UserProfile } from '@/types/UserData';
 
@@ -17,7 +18,11 @@ const Profile: React.FC<UserProfileProps> = ({
 }) => {
   return (
     <div className={styles.profileContainer}>
-      <img src={prof.iconUrl} alt={`${prof.displayName}のアイコン`} className={styles.icon} />
+      {
+        prof.iconUrl ?
+        <img src={prof.iconUrl} alt={`${prof.displayName}のアイコン`} className={styles.icon} /> :
+        <DefaultUserIcon size={48} alt={`${prof.displayName}のアイコン`} className={styles.icon} />
+      }
       <div className={styles.info}>
         <h2>{prof.displayName}</h2>
         <p className={styles.username}>@{prof.username}</p>

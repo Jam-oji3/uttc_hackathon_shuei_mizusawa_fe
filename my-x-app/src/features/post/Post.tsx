@@ -2,6 +2,7 @@ import { PostData } from '@/types/PostData';
 import { MediaPreview } from '../media/components/MediaPreview';
 import styles from './Post.module.css';
 import { FaRegComment, FaRetweet, FaHeart, FaLink } from 'react-icons/fa';
+import DefaultUserIcon from '../../components/icons/DefaultUserIcon';
 import { usePostActions } from './hooks/usePostActions';
 import { usePostClickNavigation } from './hooks/usePostClickNavigation';
 import { useUserClickNavigation } from './hooks/useUserClickNavigation';
@@ -45,13 +46,16 @@ export const Post = ({ post }: { post: PostData }) => {
     <div className={styles.postContainer} onClick={isSpoilerActive ? undefined : handlePostClick}>
       
       <div className={`${styles.post} ${isSpoilerActive ? styles.blurred : ''}`}>
-        <div className={styles.avatarContainer}>
-          <img 
-            src={post.author.iconUrl} 
-            alt={`${post.author.displayName}のアイコン`} 
-            className={styles.avatar} 
-            onClick={handleUserClick}
-          />
+        <div className={styles.avatarContainer} onClick={handleUserClick}>
+          {
+            post.author.iconUrl ? 
+            <img 
+              src={post.author.iconUrl} 
+              alt={`${post.author.displayName}のアイコン`} 
+              className={styles.avatar} 
+            /> : 
+            <DefaultUserIcon size={48} alt={`${post.author.displayName}のアイコン`} />
+          }
         </div>
         <div className={styles.mainContent}>
         {

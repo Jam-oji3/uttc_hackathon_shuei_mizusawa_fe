@@ -15,36 +15,33 @@ export const ProfileContent = ({ username }: { username: string }) => {
 
   const { posts, loading: isPostsLoading, error: postsError } = useFetchPostsByUser(profile?.id ?? '');
 
-  if (isProfLoading || isPostsLoading || isAuthLoading) {
-    return <div className={styles.loading}>読み込み中...</div>;
-  }
-
-  if (!user) {
-    return <div className={styles.error}>ログインしていません。</div>;
-  }
-
-  if (!profile) {
-    return <div className={styles.error}>プロフィールが見つかりませんでした。</div>;
-  }
-
-  if (postsError) {
-    return <div className={styles.error}>投稿の読み込みに失敗しました: {postsError}</div>;
-  }
-
   return (
     <div className={styles.profileContent}>
-      <BackHeader title={profile.displayName} />
-      <div className={styles.scrollArea}>
-        <Profile 
-          profile={profile} 
-          viewerId={user.id}
-          isFollowing={isFollowing}
-          onFollowToggle={toggleFollow} 
-        />
-        {followLoading && <p className={styles.loading}>処理中...</p>}
-        {followError && <p className={styles.error}>フォロー操作に失敗しました: {followError}</p>}
-        <PostList posts={posts} />
-      </div>
+      {isProfLoading || isPostsLoading || isAuthLoading ? (
+        <div className={styles.loading}>読み込み中...</div>
+      ) : !user ? (
+        <div className={styles.error}>ログインしていません。</div>
+      ) : !profile ? (
+        <div className={styles.error}>プロフィールが見つかりませんでした。</div>
+      ) : postsError ? (
+        <div className={styles.error}>投稿の読み込みに失敗しました: {postsError}</div>
+      ) : (
+        <>
+          <BackHeader title={profile.displayName} />
+          <div className={styles.scrollArea}>
+            <Profile 
+              profile={profile} 
+              viewerId={user.id}
+              isFollowing={isFollowing}
+              onFollowToggle={toggleFollow} 
+            />
+            {followLoading && <p className={styles.loading}>処理中...</p>}
+            {followError && <p className={styles.error}>フォロー操作に失敗しました: {followError}</p>}
+            <PostList posts={posts} />
+          </div>
+        </>
+      )}
     </div>
   );
+  
 };

@@ -1,7 +1,7 @@
-.notificationContent {
+.notificationContent {            /* ← 横幅を固定 */
     max-width: 600px;
-    margin-top: 0;
-    width: 100%;
+    width:600px;         /* ← モバイルでオーバーフローしないよう保険 */
+    margin: 0 auto;          /* ← 中央寄せ */
     height: 100vh;
     border-left: 1px solid #f0f0f0;
     border-right: 1px solid #f0f0f0;
@@ -17,6 +17,7 @@
     margin-top: 0;
     border-bottom: 1px solid #e0e0e0;
   }
+
   
   .loading,
   .error {
@@ -27,9 +28,9 @@
   }
   
   .scrollArea {
+    width: 100%;
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 1rem;
   }
   

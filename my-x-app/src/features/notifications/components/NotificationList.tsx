@@ -1,6 +1,7 @@
 import React from 'react';
 import { NotificationCard } from './NotificationCard';
 import { NotificationData } from '../../../types/NotificationData';
+import styles from './NotificationList.module.css';
 
 type Props = {
   notifications: NotificationData[];
@@ -8,7 +9,7 @@ type Props = {
 
 export const NotificationList = ({ notifications }: Props) => {
   return (
-    <>
+    <div className={styles.notifList}>
       {notifications.length === 0 ? (
         <p>通知はありません</p>
       ) : (
@@ -16,6 +17,7 @@ export const NotificationList = ({ notifications }: Props) => {
           <NotificationCard key={i} notification={n} />
         ))
       )}
-    </>
+    </div>
+    
   );
 };

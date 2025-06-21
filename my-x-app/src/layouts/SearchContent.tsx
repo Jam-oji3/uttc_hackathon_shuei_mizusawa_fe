@@ -34,13 +34,14 @@ export const SearchContent = () => {
     <div className={styles.searchContent}>
       <BackHeader title="投稿を検索" />
       <SearchBox value={inputValue} onChange={setInputValue} onSubmit={handleSubmit} />
-      {loading && <div className={styles.loading}>検索中...</div>}
-      {error && <div className={styles.error}>検索に失敗しました: {error}</div>}
-      {!loading && keyword && (!posts || posts.length === 0) && (
-        <div className={styles.noResult}>該当する投稿が見つかりませんでした。</div>
-      )}
+
       <div className={styles.scrollArea}>
-        <PostList posts={posts} />
+        {loading && <div className={styles.loading}>検索中...</div>}
+        {error && <div className={styles.error}>検索に失敗しました: {error}</div>}
+        {!loading && keyword && (!posts || posts.length === 0) && (
+          <div className={styles.noResult}>該当する投稿が見つかりませんでした。</div>
+        )}
+        {!loading && !error && posts.length > 0 && <PostList posts={posts} />}
       </div>
     </div>
   );

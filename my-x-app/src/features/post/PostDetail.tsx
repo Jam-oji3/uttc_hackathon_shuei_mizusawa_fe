@@ -1,4 +1,5 @@
 import { PostData } from '@/types/PostData';
+import DefaultUserIcon from '../../components/icons/DefaultUserIcon';
 import { MediaPreview } from '../media/components/MediaPreview';
 import styles from './PostDetail.module.css';
 import { FaRegComment, FaRetweet, FaHeart, FaLink, FaTimes } from 'react-icons/fa';
@@ -35,11 +36,15 @@ export const PostDetail = ({post}: {post: PostData}) => {
             <span>返信先</span>
           </div>}
         <div className={styles.header}>
-          <img 
-            src={post.author.iconUrl} 
-            alt={`${post.author.displayName}のアイコン`} 
-            className={styles.avatar} 
-          />
+          {
+            post.author.iconUrl ? 
+            <img 
+              src={post.author.iconUrl} 
+              alt={`${post.author.displayName}のアイコン`} 
+              className={styles.avatar} 
+            /> : 
+            <DefaultUserIcon size={48} alt={`${post.author.displayName}のアイコン`} />
+          }
           <div className={styles.authorInfo}>
             <span className={styles.authorName}>{post.author.displayName}</span>
             <span className={styles.username}>@{post.author.username}</span>

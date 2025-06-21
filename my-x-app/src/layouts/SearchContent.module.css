@@ -15,4 +15,12 @@
     overflow-x: hidden;
     min-height: 0; /* Flexboxの子要素が正しく伸びるようにする */
   }
+
+  .loading,
+.error {
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  color: #888;
+}
   

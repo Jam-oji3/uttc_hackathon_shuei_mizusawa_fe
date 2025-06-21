@@ -6,16 +6,12 @@ import { useTrends } from '../features/trend/hooks/useTrends';
 const TrendBar = () => {
   const {trends, loading ,error} = useTrends();
 
-  if (loading) {
-    return <div className={styles.loading}>トレンドを読み込み中...</div>;
-  }
-  if (error) {
-    return <div className={styles.error}>トレンドの読み込みに失敗しました: {error}</div>;
-  }
-
   return (
     <aside className={styles.trendbar}>
-      <TrendList trends={trends} />
+      {loading && <div className={styles.loading}>トレンドを読み込み中...</div>}
+      {error && <div className={styles.error}>トレンドの読み込みに失敗しました: {error}</div>}
+      {/* ロードが完了し、エラーがない場合にのみTrendListを表示 */}
+      {!loading && !error && trends && <TrendList trends={trends} />}
     </aside>
   );
 };

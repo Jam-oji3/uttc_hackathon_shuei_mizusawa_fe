@@ -14,3 +14,11 @@
   overflow-y: auto;        /* 縦スクロール */
   overflow-x: hidden;
 }
+
+.loading,
+.error {
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  color: #888;
+}
