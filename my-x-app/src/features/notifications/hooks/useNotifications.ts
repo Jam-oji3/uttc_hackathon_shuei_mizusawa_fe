@@ -8,7 +8,7 @@ export const useNotifications = (userId: string) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { user, isLoading: isAuthLoading, idToken } = useAuthContext();
+  const { isLoading: isAuthLoading, idToken } = useAuthContext();
 
   useEffect(() => {
     // 認証情報の読み込みが完了してから実行

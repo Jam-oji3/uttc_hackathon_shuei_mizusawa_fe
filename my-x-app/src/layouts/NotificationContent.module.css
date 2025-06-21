@@ -1,6 +1,6 @@
 .notificationContent {            /* ← 横幅を固定 */
     max-width: 600px;
-    width:600px;         /* ← モバイルでオーバーフローしないよう保険 */
+    width: 100%;       /* ← モバイルでオーバーフローしないよう保険 */
     margin: 0 auto;          /* ← 中央寄せ */
     height: 100vh;
     border-left: 1px solid #f0f0f0;

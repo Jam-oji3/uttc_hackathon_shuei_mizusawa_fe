@@ -4,9 +4,22 @@
     padding: 12px;
     border-bottom: 1px solid #ddd;
     background-color: #fff;
+    transition: background-color 0.2s ease;
+    cursor: pointer; /* ホバーでポインター表示 */
   }
   
-  .icon {
+  .card:hover {
+    background-color: #f0f0f0; /* 明るいグレーでホバー効果 */
+  }
+  .iconsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    min-width: 60px; /* 好みで調整 */
+  }
+  
+  .userIcon {
     width: 40px;
     height: 40px;
     border-radius: 50%;
