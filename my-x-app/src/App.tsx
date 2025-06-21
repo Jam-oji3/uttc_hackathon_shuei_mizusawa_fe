@@ -1,6 +1,7 @@
 // App.tsx
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './features/auth/components/ProtectedRoute';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
@@ -14,12 +15,47 @@ const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<SignIn />} />
-      <Route path="/home" element={<Home />} />
       <Route path="/sign-up" element={<SignUp />} />
-      <Route path="/users/:username" element={<UserProfile />} />
-      <Route path="/posts/:postId" element={<PostDetailPage />} />
-      <Route path="/notifications" element={<NotificationPage />} />
-      <Route path="/posts/search" element={<SearchPage/>}/>
+      <Route
+        path="/home"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users/:username"
+        element={
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/posts/:postId"
+        element={
+          <ProtectedRoute>
+            <PostDetailPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/notifications"
+        element={
+          <ProtectedRoute>
+            <NotificationPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/posts/search"
+        element={
+          <ProtectedRoute>
+            <SearchPage />
+          </ProtectedRoute>
+        }
+      />
 
     </Routes>
   );

@@ -80,7 +80,7 @@ export const Post = ({ post }: { post: PostData }) => {
             <span className={styles.createdAt}>{formatTimeAgo(post.createdAt)}</span>
           </div>
           <p className={styles.content}>{post.text}</p>
-          <div>
+          <div onClick={(e) => e.stopPropagation()}>
             {post.mediaUrl && post.mediaType && (
               <MediaPreview url={post.mediaUrl} type={post.mediaType} />
             )}

@@ -87,6 +87,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(null);
         setIdToken(null);
         setIsLoading(false);
+        navigate('/');
         return;
       }
 

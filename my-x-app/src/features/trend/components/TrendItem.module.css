@@ -1,0 +1,21 @@
+.trendItem {
+    padding: 0.25rem 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 0.5rem;
+  }
+  
+  .trendItem:hover {
+    background-color: #ececec;
+  }
+  
+  .trendTitle {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .trendTweets {
+    font-size: 0.85rem;
+    color: gray;
+  }
+  

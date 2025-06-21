@@ -3,11 +3,9 @@ import { FaHome, FaSearch, FaBell, FaUser, FaFeather, FaSignOutAlt } from 'react
 import AppIcon from '../components/icons/AppIcon';
 import React from 'react';
 import { useSidebarNavigation } from './hooks/useSidebarNavigations';
-import { useAuthContext } from '../contexts/AuthContext';
 
 const Sidebar = () => {
   const { items, handleClick, isActive } = useSidebarNavigation();
-  const { signOutUser } = useAuthContext();
 
   return (
     <aside className={styles.sidebar}>
